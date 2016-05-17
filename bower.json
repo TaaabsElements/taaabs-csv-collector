@@ -17,7 +17,10 @@
   "main": "taaabs-csv-collector.html",
   "license": "https://github.com/TaaabsElements/taaabs-csv-collector/LICENSE",
   "dependencies": {
-    "polymer": "polymer/polymer#^1.0.0"
+    "polymer": "polymer/polymer#^1.0.0",
+    "taaabs-csv-schema": "TaaabsElements/taaabs-csv-schema",
+    "taaabs-csv-to-ktbs": "TaaabsElements/taaabs-csv-to-ktbs",
+    "taaabs-csv-to-ktbsmodel": "TaaabsElements/taaabs-csv-to-ktbsmodel",
   },
   "devDependencies": {
     "iron-component-page": "polymerelements/iron-component-page#^1.0.0",
