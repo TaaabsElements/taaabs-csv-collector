@@ -1,0 +1,744 @@
+<link rel="import" href="taaabs-csv-collector-steps.html">
+<link rel="import" href="taaabs-csv-collector-files.html">
+<link rel="import" href="taaabs-csv-collector-configs.html">
+<link rel="import" href="taaabs-csv-collector-finalize.html">
+<link rel="import" href="../taaabs-themes/taaabs-dark-theme.html">
+
+<dom-module id="taaabs-csv-collector">
+  <template>
+    <style include="taaabs-dark-theme"></style>
+    <style>
+
+      :host{
+        width: 100%;
+        display: block;
+      }
+
+      #container{
+        width: 840px;
+        height: 400px;
+        display: block;
+      }
+
+      #container > div{
+        position:absolute;
+        display: block;
+        box-sizing: content-box;
+      }
+
+      .tile p{
+        font-size: 14px;
+        font-family: "Open Sans", Helvetica, sans-serif;
+        text-align: center;
+        text-transform: uppercase;
+        line-height: normal;
+        letter-spacing: normal;
+        box-sizing: content-box;
+      }
+
+      .arrowLabels{
+        font-size: 14px;
+        font-family: "Open Sans", Helvetica, sans-serif;
+        text-align: center;
+        line-height: normal;
+        letter-spacing: normal;
+      }
+
+      .tileButton{
+        width: 80px;
+        text-align:center;
+        padding: 2px;
+        background-color: #ed4933;
+        line-height: normal;
+        letter-spacing: normal;
+        cursor: pointer;
+        color: rgba(255,255,255,0.87);
+        -webkit-transition: background-color .3s ease-in-out;
+        -moz-transition: background-color .3s ease-in-out;
+        -ms-transition: background-color .3s ease-in-out;
+        -o-transition: background-color .3s ease-in-out;
+        transition: background-color .3s ease-in-out;
+      }
+
+      .tileButton:hover{
+        background-color: #ef5e4a;
+        color: rgba(255,255,255,1);
+      }
+
+      #tileOne{
+        width: 100px;
+        height: 100px;
+        margin-top: 60px;
+        margin-left: 180px;
+      }
+
+      #arrowOneLabel{
+        display:block;
+        margin-top: 73px;
+        width:145px;
+        margin-left:20px;
+      }
+
+      #arrowOneTop{
+        height: 10px;
+        width: 145px;
+        background-color: #ed4933;
+        margin-top: 95px;
+        margin-left: 20px;
+      }
+
+      #arrowOneBottom{
+        height: 10px;
+        width: 115px;
+        background-color: grey;
+        margin-top: 115px;
+        margin-left: 50px;
+      }
+
+
+
+      /* TILE & ARROW TWO */
+
+      #tileTwo{
+        width: 100px;
+        height: 100px;
+        margin-top: 265px;
+        margin-left: 405px;
+      }
+
+      #arrowTwoLabel{
+        display:block;
+        margin-top: 73px;
+        width:165px;
+        margin-left:295px;
+      }
+
+      #arrowTwoTop{
+        height: 160px;
+        width: 145px;
+        border-top: solid 10px #ed4933;
+        border-right: solid 10px #ed4933;
+        margin-top: 95px;
+        margin-left:  295px;
+        z-index:2
+      }
+
+      #arrowTwoBottom{
+        height: 140px;
+        width: 165px;
+        border-top: solid 10px grey;
+        border-right: solid 10px grey;
+        margin-top: 115px;
+        margin-left: 295px;
+      }
+
+      /* TILE & ARROW THREE */
+
+      #tileThree{
+        width: 100px;
+        height: 100px;
+        margin-top: 265px;
+        margin-left: 725px;
+      }
+
+      #arrowThreeLabel{
+        display:block;
+        margin-top: 278px;
+        width:185px;
+        margin-left:525px;
+      }
+
+      #arrowThreeTop{
+        height: 10px;
+        width: 185px;
+        border-top: solid 10px #ed4933;
+        margin-top: 300px;
+        margin-left: 525px;
+      }
+
+      #arrowThreeBottom{
+        height: 10px;
+        width: 185px;
+        border-top: solid 10px grey;
+        margin-top: 320px;
+        margin-left: 525px;
+      }
+
+      /* OPTIONNAL PANEL */
+
+      #leftOptLabel{
+        height: 10px;
+        width: 80px;
+        border-top: solid 1px #ed4933;
+        margin-top: 90px;
+        margin-left: 585px;
+      }
+      #rightOptLabel{
+        height: 10px;
+        width: 80px;
+        border-top: solid 1px #ed4933;
+        margin-top: 90px;
+        margin-left: 725px;
+      }
+      #OptLabel{
+        width: 100px;
+        margin-top: 85px;
+        margin-left: 645px;
+        font-size: 10px;
+        font-family: "Open Sans", Helvetica, sans-serif;
+        line-height: normal;
+        letter-spacing: normal;
+      }
+      #tileOpt{
+        width: 220px;
+        margin-left: 585px;
+        margin-top: 26px;
+      }
+      #tileOpt p{
+        font-size:11px;
+        margin-top:5px;
+      }
+      #tileOpt > center > .tileButton{
+        width: 60px;
+        margin-top: -5px;
+        font-size:10px;
+      }
+      #optBottom{
+        width: 220px;
+        height: 10px;
+        margin-left: 585px;
+        margin-top: 20px;
+        border-top: solid 1px #ed4933;
+      }
+
+      /* Iron Pages Divs */
+
+      .componentTitle{
+        display: table;
+        table-layout: fixed;
+        width: 1000px;
+        margin: 0 auto;
+        border-bottom: solid 1px grey;
+        margin-bottom: 30px
+      }
+
+
+    </style>
+
+    <iron-pages selected="{{_pageIndex}}">
+
+
+      <!-- ///////// -->
+      <!-- MAIN MENU -->
+      <!-- ///////// -->
+
+      <div style="max-width: 1000px; margin: 0 auto;">
+        <h4> {{_i18n.title.default}} </h4>
+
+        <p>
+          {{_i18n.subTitle.default}}.
+        </p>
+
+        <div id="container">
+
+          <div class="arrowLabels" id="arrowOneLabel">
+            {{_i18n.pFirst.default}}
+          </div>
+          <div id="arrowOneTop"></div>
+          <div id="arrowOneBottom"></div>
+
+          <div class="tile" id="tileOne">
+            <center>
+              <p style="margin-bottom:1em;margin-top:1em">
+                {{_i18n.pFirstD.default}}
+              </p>
+              <div on-click="_goToSchema" class="tileButton">
+                 Go
+              </div>
+            </center>
+          </div>
+
+          <div class="arrowLabels" id="arrowTwoLabel">
+            {{_i18n.pThen.default}}
+          </div>
+          <div id="arrowTwoTop"></div>
+          <div id="arrowTwoBottom"></div>
+
+          <div class="tile" id="tileTwo">
+            <center>
+              <p style="margin-bottom:1em;margin-top:1em">
+                {{_i18n.pThenD.default}}
+              </p>
+              <div on-click="_goToKtbsModel" class="tileButton">
+                 Go
+              </div>
+            </center>
+          </div>
+
+          <div class="arrowLabels" id="arrowThreeLabel">
+            {{_i18n.pFinally.default}}
+          </div>
+          <div id="arrowThreeTop"></div>
+          <div id="arrowThreeBottom"></div>
+
+          <div class="tile" id="tileThree">
+            <center>
+              <p style="margin-bottom:1em;margin-top:1em">
+                {{_i18n.pFinallyD.default}}
+              </p>
+              <div on-click="_goToKtbs" class="tileButton">
+                 Go
+              </div>
+            </center>
+          </div>
+
+          <div id="leftOptLabel"></div>
+          <div class="arrowLabels" id='OptLabel'>
+            {{_i18n.pOptionnal.default}}
+          </div>
+          <div id="rightOptLabel"></div>
+          <div class="tile" id="tileOpt">
+            <center>
+              <p style="margin-bottom:1em;margin-top:1em">
+                {{_i18n.pOptionnalD.default}}
+              </p>
+              <div class="tileButton">
+                 Go
+              </div>
+            </center>
+          </div>
+          <div id="optBottom"></div>
+        </div>
+      </div>
+
+
+      <!-- ////////////// -->
+      <!-- CSV SCHEMA DIV -->
+      <!-- ////////////// -->
+
+      <div>
+        <div class="componentTitle">
+          <div style="display: table-cell; width: 80%">
+            <h3>
+              {{_i18n.pFirstD.default}}
+              /
+              <span style="opacity: 0.27;font-weight:400"> {{_i18n.pThenD.default}} </span>
+              /
+              <span style="opacity: 0.27;font-weight:400"> {{_i18n.pFinallyD.default}} </span>
+            </h3>
+            <span style="text-transform:uppercase; font-weight: normal; font-size:12px">{{baseUrl}}</span>
+          </div>
+          <div style="display: table-cell; width: 20%; text-align:right;">
+            <span class="button" on-click="_backToHome">{{_i18n.back.default}}</span>
+          </div>
+        </div>
+        <taaabs-csv-schema  id="csvSchema"
+                            csv-schemas="{{csvSchemas}}"
+                            base="[[_base]]"
+                            files="{{files}}"
+                            csv-schema="{{csvSchema}}"
+                            language="{{language}}">
+        </taaabs-csv-schema>
+      </div>
+
+      <!-- ///////////////////// -->
+      <!-- CSV TO KTBS MODEL DIV -->
+      <!-- ///////////////////// -->
+
+      <div>
+        <div class="componentTitle">
+          <div style="display: table-cell; width: 80%">
+            <h3>
+              <span style="opacity: 0.27;font-weight:400"> {{_i18n.pFirstD.default}} </span>
+              /
+              {{_i18n.pThenD.default}}
+              /
+              <span style="opacity: 0.27;font-weight:400"> {{_i18n.pFinallyD.default}} </span>
+            </h3>
+            <span style="text-transform:uppercase; font-weight: normal; font-size:12px">{{baseUrl}}</span>
+          </div>
+          <div style="display: table-cell; width: 20%; text-align:right;">
+            <span class="button" on-click="_backToHome">{{_i18n.back.default}}</span>
+          </div>
+        </div>
+        <taaabs-csv-to-ktbsmodel id="csvToKtbsModel"
+                                 csv-schemas="{{csvSchemas}}"
+                                 base="[[_base]]"
+                                 files="{{files}}"
+                                 csv-schema="{{csvSchema}}"
+                                 language="{{language}}">
+        </taaabs-csv-to-ktbsmodel>
+      </div>
+
+      <!-- /////////////// -->
+      <!-- CSV TO KTBS DIV -->
+      <!-- /////////////// -->
+
+      <div>
+        <div class="componentTitle">
+          <div style="display: table-cell; width: 80%">
+            <h3>
+              <span style="opacity: 0.27;font-weight:400"> {{_i18n.pFirstD.default}} </span>
+              /
+              <span style="opacity: 0.27;font-weight:400"> {{_i18n.pThenD.default}} </span>
+              /
+              {{_i18n.pFinallyD.default}}
+            </h3>
+            <span style="text-transform:uppercase; font-weight: normal; font-size:12px">{{baseUrl}}</span>
+          </div>
+          <div style="display: table-cell; width: 20%; text-align:right;">
+            <span class="button" on-click="_backToHome">{{_i18n.back.default}}</span>
+          </div>
+        </div>
+        <taaabs-csv-to-ktbs id="csvToKtbs"
+                            base="[[_base]]"
+                            csv-schemas="{{csvSchemas}}"
+                            files="{{files}}"
+                            csv-schema="{{csvSchema}}"
+                            language="{{language}}">
+        </taaabs-csv-to-ktbs>
+      </div>
+    <iron-pages>
+  </template>
+
+  <script>
+
+      /**
+      * `taaabs-csv-collector` is a graphical element in which the user can edit a trace model from some csv files, and then upload the traces.
+      */
+      Polymer({
+        is: 'taaabs-csv-collector',
+
+        properties: {
+
+          /**
+          * If true, gets resources by firing `GET_RESOURCE` events.
+          * Gets resource in the component otherwise.
+          *
+          * @see taaabs-resource-loader
+          *
+          * @attribute taaabsCentralLoading
+          * @type Boolean
+          */
+          taaabsCentralLoading: {
+            type: Boolean,
+            notify: true,
+            value: false
+          },
+
+          /**
+          * Target base URL.
+          *
+          * @attribute baseUrl
+          * @type String
+          */
+          baseUrl: {
+            type: String,
+            notify: true,
+            value : ""
+          },
+
+          /**
+          * Index of the current page section of the iron-pages.
+          *
+          * @attribute _pageIndex
+          * @type Number
+          */
+          _pageIndex: {
+            type: Number,
+            notify: true,
+            value: 0
+          },
+
+          /**
+          * Traces files opened by the user.
+          *
+          * @attribute files
+          * @type Array
+          */
+          files: {
+            type: Array,
+            notify: true,
+            value: function(){
+              return [];
+            }
+          },
+
+          /**
+          * Current csv schema used/edited by the user.
+          *
+          * @attribute csvSchema
+          * @type Object
+          */
+          csvSchema: {
+            type: Object,
+            notify: true,
+            value: function(){
+              return {};
+            }
+          },
+
+          /**
+          * Array of all existing csv schemas on the current base.
+          *
+          * @attribute csvSchemas
+          * @type Array
+          */
+          csvSchemas: {
+            type: Array,
+            notify: true,
+            value: function(){
+              return [];
+            }
+          },
+
+          /**
+          * Current base edited by the user.
+          *
+          * @attribute _base
+          * @type Object
+          *
+          * @see Samotraces
+          */
+          _base: {
+            type: Object,
+            notify: true,
+            value: null,
+            observer: '_baseChanged'
+          },
+
+          /**
+          * Id of the current `base` edited by the user.
+          *
+          * @attribute _baseId
+          * @type String
+          */
+          _baseId: {
+            type: String,
+            notify: true,
+            value: ''
+          },
+
+          //////////
+          // I18N //
+          //////////
+
+          /**
+          * Localization.
+          * fr, en.
+          *
+          * @attribute language
+          * @type String
+          */
+          language: {
+              type: String,
+              notify: true,
+              observer: "_languageChanged"
+          },
+
+          /**
+          * Localization object.
+          *
+          * @attribute i18n
+          * @type Object
+          */
+          _i18n: {
+              type: Object,
+              value: {
+                "title": {
+                  "default" : "Csv collector",
+                  "en" : "Csv collector",
+                  "fr" : "Collecteur de trace csv"
+                },
+                "subTitle": {
+                  "default" : "You can go on any step as long as you already did the previous processes",
+                  "en" : "You can go on any step as long as you already did the previous processes",
+                  "fr" : "Vous pouvez allez à l'étape que vous désirez, pourvu que vous aillez accompli l'étape précédente"
+                },
+                "back": {
+                  "default" : "Back",
+                  "en" : "Back",
+                  "fr" : "Retour"
+                },
+                "pFirst": {
+                  "default" : "First",
+                  "en" : "First",
+                  "fr" : "Premièrement"
+                },
+                "pFirstD": {
+                  "default" : "Describe your csv file",
+                  "en" : "Describe your csv file",
+                  "fr" : "Décrivez votre fichier csv"
+                },
+                "pThen": {
+                  "default" : "Then",
+                  "en" : "Then",
+                  "fr" : "Ensuite"
+                },
+                "pThenD": {
+                  "default" : "Create your trace model",
+                  "en" : "Create your trace model",
+                  "fr" : "Créez votre modèle de trace"
+                },
+                "pFinally": {
+                  "default" : "Finally",
+                  "en" : "Finally",
+                  "fr" : "Enfin"
+                },
+                "pFinallyD": {
+                  "default" : "Upload your traces",
+                  "en" : "Upload your traces",
+                  "fr" : "Uploadez vos traces"
+                },
+                "pOptionnal": {
+                  "default" : "Optionnal",
+                  "en" : "Optionnal",
+                  "fr" : "Optionnel"
+                },
+                "pOptionnalD": {
+                  "default" : "Verify your traces",
+                  "en" : "Verify your traces",
+                  "fr" : "Vérifiez vos traces"
+                }
+              },
+              notify: true
+          }
+
+        },
+
+        listeners: {
+        },
+
+
+        ready: function() {
+
+          var that = this;
+
+          this.$.csvSchema.addEventListener('SAVE_NEXT', function(){
+            that.$.csvToKtbsModel.$.tcme._initTypes();
+            that.$.csvToKtbsModel.$.tcme._getSample();
+            that.$.csvToKtbsModel._goToPage(2);
+            that._goToKtbsModel();
+          });
+
+          this.$.csvToKtbsModel.nextStepFunction = function(){
+            that.$.csvToKtbs.initFilesAndSchema(true,true);
+            that._goToKtbs();
+          }
+
+          /*
+          this.$.tcvfs.returnFunction = function(){
+            that.$.verifyFileContainer.style.zIndex = -2;
+            that.$.verifyFileContainer.style.opacity = 0;
+          }
+          */
+
+        },
+
+        /**
+        * Triggered when the language option is changed.
+        * Switches every text into the new language.
+        *
+        * @method _languageChanged
+        */
+        _languageChanged: function(){
+          for(var prop in this._i18n) {
+            var tmp = "_i18n."+prop+".default";
+            this.set(tmp, this._i18n[prop][this.language]);
+          }
+        },
+
+        /**
+        * Loads `_base` according to `baseUrl`.
+        *
+        * Fires 'GET_RESOURCE' if `taaabs-central-loading` is true.
+        *
+        * @method refresh
+        */
+        refresh: function(){
+          console.log( this.taaabsCentralLoading );
+          if( this.baseUrl !== "" && this.taaabsCentralLoading)
+            this.fire('GET_RESOURCE', {url:this.baseUrl, obj:"_base"});
+        },
+
+        /**
+        *Triggered when `_base` changes. Set `_baseId` with the suffix of the base url.
+        *
+        * @method _baseChanged
+        */
+        _baseChanged: function(){
+          if(this._base !== null){
+            var id = this.baseUrl.split('/');
+            id = id[id.length - 2];
+            this.set('_baseId', id);
+          }
+        },
+
+        /**
+        * Called when the user chooses to use `taaabs-csv-schema`.
+        * Changes `_pageIndex` to display the right section.
+        *
+        * @method _goToSchema
+        *
+        * @see _pageIndex
+        */
+        _goToSchema: function(){
+          this.set('_pageIndex', 1);
+          window.scrollTo(0,0);
+        },
+
+        /**
+        * Called when the user chooses to use `taaabs-csv-to-ktbsmodel`.
+        * Changes `_pageIndex` to display the right section.
+        *
+        * @method _goToKtbsModel
+        *
+        * @see _pageIndex
+        */
+        _goToKtbsModel: function(){
+          this.set('_pageIndex', 2);
+          window.scrollTo(0,0);
+        },
+
+        /**
+        * Called when the user chooses to use `taaabs-csv-to-ktbs`.
+        * Changes `_pageIndex` to display the right section.
+        *
+        * @method _goToKtbs
+        *
+        * @see _pageIndex
+        */
+        _goToKtbs: function(){
+          this.set('_pageIndex', 3);
+          window.scrollTo(0,0);
+        },
+
+        /**
+        * Called when the user chooses to use `taaabs-csv-verify`.
+        * Changes `_pageIndex` to display the right section.
+        *
+        * @method _goToVerify
+        *
+        * @see _pageIndex
+        */
+        _goToVerify: function(){
+          this.set('_pageIndex', 4);
+          window.scrollTo(0,0);
+        },
+
+        /**
+        * Called when the user chooses to go back to the main page.
+        * Changes `_pageIndex` to display the right section.
+        *
+        * @method _backToHome
+        *
+        * @see _pageIndex
+        */
+        _backToHome: function(){
+          this.set('_pageIndex', 0);
+          window.scrollTo(0,0);
+        }
+    });
+  </script>
+
+</dom-module>

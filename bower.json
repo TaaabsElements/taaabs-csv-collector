@@ -1,0 +1,27 @@
+{
+  "name": "taaabs-csv-collector",
+  "version": "1.0.0",
+  "description": "A graphical element in which the user can edit a trace model from some csv files, and then upload the traces.",
+  "keywords": [
+    "web-components",
+    "polymer",
+    "taaabs"
+  ],
+  "authors": [
+    "Rémi Casado"
+  ],
+  "repository": {
+   "type": "git",
+   "url": "https://github.com/TaaabsElements/taaabs-csv-collector.git"
+  },
+  "main": "taaabs-csv-collector.html",
+  "license": "https://github.com/TaaabsElements/taaabs-csv-collector/LICENSE",
+  "dependencies": {
+    "polymer": "polymer/polymer#^1.0.0"
+  },
+  "devDependencies": {
+    "iron-component-page": "polymerelements/iron-component-page#^1.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  },
+  "ignore": []
+}

@@ -1,0 +1,231 @@
+<link rel="import" href="../taaabs-themes/taaabs-dark-theme.html">
+<dom-module id="taaabs-csv-collector-configs">
+  <template>
+
+    <style include="taaabs-dark-theme"></style>
+    <style>
+
+      :host{
+        width: 100%;
+        display: block
+      }
+
+      :host #container{
+        display: table;
+        table-layout: fixed;
+        width: 100%;
+      }
+
+      :host .cells{
+        display: table-cell;
+        width: 33%;
+        border-right: solid 1px grey;
+        padding-right: 10px;
+        text-align: center;
+      }
+
+      :host .cells > div{
+        display: table;
+        width: 100%;
+        height: 170px;
+        padding:15px;
+      }
+
+      :host .cells > div > div{
+        display:table-row;
+      }
+
+      :host .button{
+        width: 90%
+      }
+
+      input[type="file"]{
+        opacity: 0;
+        pointer-events: none;
+      }
+
+    </style>
+
+    <h4>{{_i18n.iCIHeader.default}}</h4>
+    <div id="container">
+
+      <div class="cells" style="border-left: solid 1px grey">
+        <div>
+          <div style="height: 100%;">
+            <p>{{_i18n.iCICreate.default}}</p>
+          </div>
+          <div>
+            <div class="button" on-click="_createCsvSchema">{{_i18n.iCICreateBtn.default}}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cells">
+        <div>
+          <div style="height: 100%;">
+            <p> <span>{{_i18n.iCISelect.default}}</span> </p>
+            <select id="selectcsvSchema" style="width: 100%">
+              <template is="dom-repeat" items="{{csvSchemas}}">
+                <option value="{{index}}"><span>{{item.id}}</span> ( <span>{{item.label}}</span> )</option>
+              </template>
+            </select>
+          </div>
+          <div>
+            <div class="button" on-click="_selectCsvSchema">{{_i18n.iCISelectBtn.default}}</div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="cells">
+        <div>
+          <div style="height: 100%;">
+            <p> <span>{{_i18n.iCIUpload.default}}</span> </p>
+          </div>
+          <div>
+            <input type="file" id="files" name="files[]" on-change="_getCsvModel" ></input>
+            <div class="button" on-click="_openFiles">{{_i18n.files.default}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </template>
+
+  <script>
+    /* global Polymer */
+
+    Polymer({
+
+      is: 'taaabs-csv-collector-configs',
+
+      /**
+      * Fired when the chooses an existing schema.
+      *
+      * The event has the following parameter :
+      *
+      *     {
+      *       index : <index_of_the_selected_csvSchema>
+      *     }
+      *
+      * @event SELECT_SCHEMA
+      */
+
+      /**
+      * Fired when the chooses to create a new schema.
+      *
+      * @event CREATE_SCHEMA
+      */
+
+      properties: {
+
+        /**
+        * Array of all existing csv schemas on the current base.
+        *
+        * @attribute csvSchemas
+        * @type Array
+        */
+        csvSchemas: {
+          type: Array,
+          value: []
+        },
+
+        ///////////////
+        // _i18n VARS //
+        ///////////////
+
+        /**
+        * Localization object.
+        *
+        * @attribute _i18n
+        * @type Object
+        */
+        _i18n: {
+            type: Object,
+            value: {
+              "iCIHeader":{
+            	  "default":"Create, select or upload an import configuration",
+            	  "en":"Create, select or upload an import configuration",
+            	  "fr":"Créez, sélectionnez ou uploadez une configuration d'import"
+            	},
+            	"iCICreate":{
+            	  "default":"Create a new import configuration",
+            	  "en":"Create a new import configuration",
+            	  "fr":"Créez une nouvelle configuration d'import"
+            	},
+            	"iCICreateBtn":{
+            	  "default":"Create",
+            	  "en":"Create",
+            	  "fr":"Créer"
+            	},
+            	"iCISelect":{
+            	  "default":"Select an existing import configuration",
+            	  "en":"Select an existing import configuration",
+            	  "fr":"Sélectionnez une configuration d'import"
+            	},
+            	"iCISelectBtn":{
+            	  "default":"Select",
+            	  "en":"Select",
+            	  "fr":"Selectionner"
+            	},
+            	"iCIUpload":{
+            	  "default":"Upload an import configuration from a file",
+            	  "en":"Upload an import configuration from a file",
+            	  "fr":"Uploadez une configuration d'import à partir d'un fichier"
+            	},
+              "files":{
+            	  "default":"Upload config file",
+            	  "en":"Upload config file",
+            	  "fr":"Charger un fichier de config"
+            	}
+            },
+            notify: true
+        },
+
+        /**
+        * Localization.
+        * fr, en.
+        *
+        * @attribute language
+        * @type String
+        */
+        language: {
+            type: String,
+            notify: true,
+            observer: "_languageChanged"
+        }
+      },
+
+      ready: function(){
+
+      },
+
+      /**
+      * Triggered when the language option is changed.
+      * Switches every text into the new language.
+      *
+      * @method _languageChanged
+      */
+      _languageChanged: function(){
+        for(var prop in this._i18n) {
+          var tmp = "_i18n."+prop+".default";
+          this.set(tmp, this._i18n[prop][this.language]);
+        }
+      },
+
+      _selectCsvSchema: function(e){
+        this.fire('SELECT_SCHEMA',{index:this.$.selectcsvSchema.value});
+      },
+
+      _createCsvSchema: function(){
+        this.fire('CREATE_SCHEMA');
+      },
+
+      _openFiles: function(){
+        this.$.files.click();
+      }
+
+    });
+  </script>
+
+</dom-module>

@@ -1,0 +1,186 @@
+<link rel="import" href="../taaabs-themes/taaabs-dark-theme.html">
+<dom-module id="taaabs-csv-collector-finalize">
+  <template>
+
+    <style include="taaabs-dark-theme"></style>
+    <style>
+
+      :host{
+        width: 100%;
+        display: block
+      }
+
+      :host .subTitle{
+        text-transform: uppercase;
+        font-weight: normal;
+        font-size: 10px;
+      }
+
+    </style>
+
+      <h4>{{_i18n.fPHeader.default}} ( <span class="subTitle">{{csvSchemaId}}</span> ) </h4>
+      <div style="padding-bottom: 2em ">
+        <div style="padding-bottom: 0.5em">
+          {{_i18n.fPSaveGo.default}}
+        </div>
+        <div on-click="_saveNext" class="button">
+          {{_i18n.fPSaveGoBtn.default}}
+        </div>
+      </div>
+      <div style="padding-bottom: 2em">
+        <div style="padding-bottom: 0.5em">
+          {{_i18n.fPExport.default}}
+        </div>
+        <div on-click="_export" class="button">
+          {{_i18n.fPExportBtn.default}}
+        </div>
+      </div>
+      <div style="padding-bottom: 2em">
+        <div style="padding-bottom: 0.5em">
+          {{_i18n.fPSaveLeave.default}}
+        </div>
+        <div on-click="_saveExit" class="button">
+          {{_i18n.fPSaveLeaveBtn.default}}
+        </div>
+      </div>
+
+    </template>
+    <script>
+      /* global Polymer */
+
+      Polymer({
+
+        is: 'taaabs-csv-collector-finalize',
+
+        /**
+        * Fired when the SAVE_NEXT button is clicked.
+        *
+        * @event SAVE_NEXT
+        */
+
+        /**
+        * Fired when the SAVE_EXIT button is clicked.
+        *
+        * @event SAVE_EXIT
+        */
+
+        /**
+        * Fired when the EXPORT button is clicked.
+        *
+        * @event EXPORT
+        */
+
+        properties: {
+
+          /**
+          * The id of the current csvSchema.
+          *
+          * @attribute csvSchemaId
+          * @type String
+          */
+          csvSchemaId: {
+            type: String,
+            value: ""
+          },
+
+          ////////////////
+          // _i18n VARS //
+          ////////////////
+
+          /**
+          * Localization object.
+          *
+          * @attribute _i18n
+          * @type Object
+          */
+          _i18n: {
+              type: Object,
+              value: {
+                "fPHeader":{
+              	  "default":"Save the import configuration",
+              	  "en":"Save the import configuration",
+              	  "fr":"Sauvegarder la configuration d'import"
+              	},
+              	"fPExport":{
+              	  "default":"Export in a file for local save",
+              	  "en":"Export in a file for local save",
+              	  "fr":"Exporter dans un fichier de sauvegarde"
+              	},
+              	"fPExportBtn":{
+              	  "default":"Export",
+              	  "en":"Export",
+              	  "fr":"Exporter"
+              	},
+              	"fPSaveGo":{
+              	  "default":"Save in the kTBS & go to the next step",
+              	  "en":"Save in the kTBS & go to the next step",
+              	  "fr":"Sauvegarder dans un ktbs et continuer l'upload de trace"
+              	},
+              	"fPSaveGoBtn":{
+              	  "default":"Save & continue",
+              	  "en":"Save & continue",
+              	  "fr":"Sauvegarder et continuer"
+              	},
+              	"fPSaveLeave":{
+              	  "default":"Save in a kTBS & leave the trace upload process",
+              	  "en":"Save in a kTBS & leave the trace upload process",
+              	  "fr":"Sauvegarder dans un ktbs et quitter l'upload de trace"
+              	},
+              	"fPSaveLeaveBtn":{
+              	  "default":"Save & leave",
+              	  "en":"Save & leave",
+              	  "fr":"Sauvegarder et quitter"
+              	}
+              },
+              notify: true
+          },
+
+          /**
+          * Localization.
+          * fr, en.
+          *
+          * @attribute language
+          * @type String
+          */
+          language: {
+              type: String,
+              notify: true,
+              observer: "_languageChanged"
+          }
+        },
+
+        ready: function(){
+
+        },
+
+        /**
+        * Triggered when the language option is changed.
+        * Switches every text into the new language.
+        *
+        * @method _languageChanged
+        */
+        _languageChanged: function(){
+          for(var prop in this._i18n) {
+            var tmp = "_i18n."+prop+".default";
+            this.set(tmp, this._i18n[prop][this.language]);
+          }
+        },
+
+        _saveNext: function(){
+          this.fire('SAVE_NEXT');
+        },
+
+        _export: function(){
+            this.fire('EXPORT');
+        },
+
+        _saveExit: function(){
+            this.fire('SAVE_EXIT');
+        }
+
+
+
+      });
+    </script>
+
+  </dom-module>
