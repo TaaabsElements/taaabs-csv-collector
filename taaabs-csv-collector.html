@@ -618,7 +618,6 @@
           var that = this;
 
           this.$.csvSchema.addEventListener('SAVE_NEXT', function(){
-            that.$.csvToKtbsModel.$.tcme._initTypes();
             that.$.csvToKtbsModel.$.tcme._getSample();
             that.$.csvToKtbsModel._goToPage(2);
             that._goToKtbsModel();
