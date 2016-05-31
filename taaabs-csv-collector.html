@@ -623,17 +623,10 @@
             that._goToKtbsModel();
           });
 
-          this.$.csvToKtbsModel.nextStepFunction = function(){
-            that.$.csvToKtbs.initFilesAndSchema(true,true);
+          this.$.csvToKtbsModel.addEventListener('SAVE_NEXT', function(){
+            that.$.csvToKtbs._goToPage(2);
             that._goToKtbs();
-          }
-
-          /*
-          this.$.tcvfs.returnFunction = function(){
-            that.$.verifyFileContainer.style.zIndex = -2;
-            that.$.verifyFileContainer.style.opacity = 0;
-          }
-          */
+          });
 
         },
 
