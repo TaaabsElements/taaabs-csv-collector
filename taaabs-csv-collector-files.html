@@ -5,45 +5,41 @@
 
     <style include="taaabs-dark-theme"></style>
     <style>
-
-      :host{
+      :host {
         width: 100%;
         display: block
       }
 
-      :host .editIcons{
-        float:right;
+      :host .editIcons {
+        float: right;
         cursor: pointer;
       }
 
-      :host #submit{
+      :host #submit {
         opacity: 0.27;
       }
-
     </style>
 
-    <iron-icon icon="icons:close" class="editIcons fgRed fgRedH"
-      id="cancel" on-click="_cancel">
+    <iron-icon icon="icons:close" class="editIcons fgRed fgRedH" id="cancel" on-click="_cancel">
     </iron-icon>
-    <iron-icon icon="icons:check" class="editIcons fgGreen fgGreenH"
-      id="submit" on-click="_submit">
+    <iron-icon icon="icons:check" class="editIcons fgGreen fgGreenH" id="submit" on-click="_submit">
     </iron-icon>
-    <h4> <span>{{_i18n.fSHeader.default}}</span> </h4>
+    <h4> <span>[[localize('fSHeader')]]</span> </h4>
     <file-reader id="filereaderElem" files={{files}}></file-reader>
     <div style="line-height: normal; letter-spacing: normal; font-size:16px; margin-top: 30px; ">
       <table>
         <tr>
-          <th><span>{{_i18n.fSFileName.default}}</span></th>
-          <th><span>{{_i18n.fSFileSize.default}}</span></th>
+          <th><span>[[localize('fSFileName')]]</span></th>
+          <th><span>[[localize('fSFileSize')]]</span></th>
         </tr>
         <template is="dom-repeat" items="{{files}}">
           <tr>
-            <td > <span>{{item.name}}</span> </td>
+            <td> <span>{{item.name}}</span> </td>
             <td> <span>{{item.size}}</span> </td>
           </tr>
         </template>
       </table>
-      </div>
+    </div>
 
   </template>
 
@@ -55,19 +51,19 @@
       is: 'taaabs-csv-collector-files',
 
       /**
-      * Fired when the submit button is clicked and at least one file has been selected.
-      *
-      * @event FILES_SELECTED
-      */
+       * Fired when the submit button is clicked and at least one file has been selected.
+       *
+       * @event FILES_SELECTED
+       */
 
       properties: {
 
         /**
-        * The files selected.
-        *
-        * @attribute files
-        * @type Array
-        */
+         * The files selected.
+         *
+         * @attribute files
+         * @type Array
+         */
         files: {
           type: Array,
           notify: true,
@@ -75,11 +71,11 @@
         },
 
         /**
-        * The `file-reader` component.
-        *
-        * @attribute fileReader
-        * @type Object
-        */
+         * The `file-reader` component.
+         *
+         * @attribute fileReader
+         * @type Object
+         */
         fileReader: {
           type: Object,
           notify: true,
@@ -90,49 +86,42 @@
         // _i18n VARS //
         ////////////////
 
-        /**
-        * Localization object.
-        *
-        * @attribute _i18n
-        * @type Object
-        */
-        _i18n: {
-            type: Object,
-            value: {
-              "fSHeader":{
-            	  "default":"Select the trace files you want to import",
-            	  "en":"Select the trace files you want to import",
-            	  "fr":"Sélectionnez les fichiers de traces que vous souhaitez importer"
-            	},
-            	"fSFileName":{
-            	  "default":"Files name",
-            	  "en":"Files name",
-            	  "fr":"Nom des fichiers"
-            	},
-            	"fSFileSize":{
-            	  "default":"Size (bytes)",
-            	  "en":"Size (bytes)",
-            	  "fr":"Taille (octets)"
-            	}
-            },
-            notify: true
+        resources: {
+          value: function() {
+            return {
+              "en": {
+                "fSHeader": "Select the trace files you want to import",
+                "fSFileName": "Files name",
+                "fSFileSize": "Size (bytes)"
+              },
+              "fr": {
+                "fSHeader": "Sélectionnez les fichiers de traces que vous souhaitez importer",
+                "fSFileName": "Nom des fichiers",
+                "fSFileSize": "Taille (octets)"
+              }
+            }
+          }
         },
 
         /**
-        * Localization.
-        * fr, en.
-        *
-        * @attribute language
-        * @type String
-        */
+         * Localization.
+         * fr, en.
+         *
+         * @attribute language
+         * @type String
+         */
         language: {
-            type: String,
-            notify: true,
-            observer: "_languageChanged"
+          type: String,
+          notify: true,
+          value: 'en'
         }
       },
 
-      ready: function(){
+      behaviors: [
+        Polymer.AppLocalizeBehavior
+      ],
+
+      ready: function() {
         // Set the `_filereader`.
         this.set('fileReader', this.$.filereaderElem);
 
@@ -141,32 +130,19 @@
 
         // Function triggered when the user has chosen some files with the
         //`_filereader`.
-        this.fileReader.returnFunction = function(){
+        this.fileReader.returnFunction = function() {
           // Changes css of the next step button
           that.$.submit.style.cursor = "pointer";
           that.$.submit.style.opacity = 1;
         }
       },
 
-      _cancel: function(){
+      _cancel: function() {
         this.set('files', []);
       },
 
-      /**
-      * Triggered when the language option is changed.
-      * Switches every text into the new language.
-      *
-      * @method _languageChanged
-      */
-      _languageChanged: function(){
-        for(var prop in this._i18n) {
-          var tmp = "_i18n."+prop+".default";
-          this.set(tmp, this._i18n[prop][this.language]);
-        }
-      },
-
-      _submit: function(){
-        if(this.files.length > 0)
+      _submit: function() {
+        if (this.files.length > 0)
           this.fire('FILES_SELECTED');
       }
     });

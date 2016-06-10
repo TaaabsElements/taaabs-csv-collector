@@ -4,104 +4,101 @@
 
     <style include="taaabs-dark-theme"></style>
     <style>
-
-      :host{
+      :host {
         width: 100%;
         display: block
       }
 
-      :host #container{
+      :host #container {
         width: 100%;
         display: table;
         table-layout: fixed;
       }
 
-      :host .cell{
+      :host .cell {
         display: table-cell;
-        background-color: rgba(255,255,255,0.37);
+        background-color: rgba(255, 255, 255, 0.37);
         padding-left: 10px;
       }
 
-      :host .cell:nth-child(1){
+      :host .cell:nth-child(1) {
         padding-left: 0px;
       }
 
-      :host .cell > div{
+      :host .cell > div {
         text-align: center;
         padding: 0.38em 1em 0.3em 1em;
       }
 
-      :host .cellHeader{
+      :host .cellHeader {
         border: solid 1px grey;
         border-bottom: none;
         cursor: pointer;
       }
 
-      :host .cellContent{
+      :host .cellContent {
         text-transform: uppercase;
         border: solid 1px grey;
         border-top: none;
         font-size: 10px;
       }
 
-      :host .undone{
+      :host .undone {
         cursor: not-allowed;
       }
-
     </style>
 
     <div id="container">
       <template is="dom-repeat" items="{{steps}}">
-          <div class="cell">
-            <div class$="cellHeader {{_updateColors(item.state)}}" on-click="_cellClicked">
-              Step #{{index}}
-            </div>
-            <div class="cellContent">
-              {{item.name}}
-            </div>
+        <div class="cell">
+          <div class$="cellHeader {{_updateColors(item.state)}}" on-click="_cellClicked">
+            [[localize('step')]] #{{index}}
           </div>
+          <div class="cellContent">
+            {{item.name}}
+          </div>
+        </div>
       </template>
     </div>
 
   </template>
 
   <script>
-
     /**
-    * `<taaabs-csv-collector-steps>` is a graphical element.
-    *
-    * Example:
-    *
-    *     <taaabs-csv-collector-steps id="tccs" steps=[[_steps]]></taaabs-csv-collector-steps>
-    *
-    * Source files: <a href="https://github.com/TaaabsElements/taaabs-csv-collector" target="_blank">taaabs-csv-collector</a>
-    */
+     * `<taaabs-csv-collector-steps>` is a graphical element.
+     *
+     * Example:
+     *
+     *     <taaabs-csv-collector-steps id="tccs" steps=[[_steps]]></taaabs-csv-collector-steps>
+     *
+     * Source files: <a href="https://github.com/TaaabsElements/taaabs-csv-collector" target="_blank">taaabs-csv-collector</a>
+     */
     Polymer({
 
       is: 'taaabs-csv-collector-steps',
 
       /**
-      * Fired if a step has been selected.
-      *
-      * Returns an object :
-      *
-      *     {
-      *       "index": <INDEX_OF_THE_STEP_SELECTED>
-      *     }
-      *
-      * @event STEP_CLICKED
-      */
+       * Fired if a step has been selected.
+       *
+       * Returns an object :
+       *
+       *     {
+       *       "index": <INDEX_OF_THE_STEP_SELECTED>
+       *     }
+       *
+       * @event STEP_CLICKED
+       */
 
       properties: {
 
         /**
-        * The different steps of a process.
-        *
-        * Each step must have a `name` and a `state` ('current', 'done', 'undone').
-        *
-        * @attribute steps
-        * @type Array
-        */
+         * The different steps of a process.
+         *
+         * Each step must have a `name` and a `state` ('current', 'done', 'undone').
+         *
+         * @attribute steps
+         * @type Array
+         */
         steps: {
           type: Array,
           notify: true,
@@ -112,70 +109,69 @@
         // I18N VARS //
         ///////////////
 
-        /**
-        * Localization object.
-        *
-        * @attribute i18n
-        * @type Object
-        */
-        i18n: {
-            type: Object,
-            value: function(){
-              return {}
-            },
-            notify: true
+        resources: {
+            value: function() {
+              return {
+                "en": { "step": "Step" },
+                "fr": { "step": "Étape" }
+              }
+          }
         },
 
         /**
-        * Localization.
-        * fr, en.
-        *
-        * @attribute language
-        * @type String
-        */
+         * Localization.
+         * fr, en.
+         *
+         * @attribute language
+         * @type String
+         */
         language: {
-            type: String,
-            notify: true,
-            observer: "_languageChanged"
+          type: String,
+          notify: true,
+          value: 'en'
         }
       },
 
-      ready: function(){
+      behaviors: [
+        Polymer.AppLocalizeBehavior
+      ],
 
-      },
+      ready: function() {},
 
       /**
-      * Set the classes of the `.cellHeader` elements, according to the corresponding step state.
-      *
-      * @param {!required} e (String) The state of a step ('current', 'done', 'undone').
-      *
-      * @method _updateColors
-      */
-      _updateColors: function(e){
-        switch(e){
+       * Set the classes of the `.cellHeader` elements, according to the corresponding step state.
+       *
+       * @param {!required} e (String) The state of a step ('current', 'done', 'undone').
+       *
+       * @method _updateColors
+       */
+      _updateColors: function(e) {
+        switch (e) {
           case 'done':
-            return 'fgWhite '+'bgGreen '+'bgGreenH';
-          break;
+            return 'fgWhite ' + 'bgGreen ' + 'bgGreenH';
+            break;
           case 'undone':
-            return 'fgWhite '+'bgRed '+'bgRedH '+'undone';
-          break;
+            return 'fgWhite ' + 'bgRed ' + 'bgRedH ' + 'undone';
+            break;
           case 'current':
             return '';
-          break;
+            break;
         }
       },
 
       /**
-      * Triggered when a `.cellHeader` is clicked. Fires `STEP_CLICKED` with the index of the step,
-      * if and only if the targeted step is already done.
-      *
-      * @param {!required} e (String) The event object of click.
-      *
-      * @method _cellClicked
-      */
-      _cellClicked: function(e){
-        if(e.model.item.state === 'done')
-          this.fire('STEP_CLICKED',{index:e.model.index});
+       * Triggered when a `.cellHeader` is clicked. Fires `STEP_CLICKED` with the index of the step,
+       * if and only if the targeted step is already done.
+       *
+       * @param {!required} e (String) The event object of click.
+       *
+       * @method _cellClicked
+       */
+      _cellClicked: function(e) {
+        if (e.model.item.state === 'done')
+          this.fire('STEP_CLICKED', {
+            index: e.model.index
+          });
       }
     });
   </script>
