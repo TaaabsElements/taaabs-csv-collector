@@ -1,0 +1,30 @@
+{
+    "en": {
+      "tcc_title": "Csv Collector",
+      "tcc_subTitle": "You can go to any step as long as you've already completed the previous one",
+      "tcc_pFirst": "First",
+      "tcc_pFirstD": "Describe Your Csv",
+      "tcc_pThen": "Then",
+      "tcc_pThenD": "Describe Your Model",
+      "tcc_pFinally": "Finally",
+      "tcc_pFinallyD": "Upload Your Trace",
+      "tcc_pOptionnal": "Settings",
+      "tcc_pOptionnalD": "Manage Your Import Configurations",
+      "tcc_back": "Back",
+      "tccs_step": "Step"
+    },
+    "fr": {
+      "tcc_title": "Collecteur Csv",
+      "tcc_subTitle": "Vous pouvez aller à n'importe quelle étape du moment que vous avez déjà complété les précédentes",
+      "tcc_pFirst": "Premièrement",
+      "tcc_pFirstD": "Décrivez Votre Csv",
+      "tcc_pThen": "Ensuite",
+      "tcc_pThenD": "Décrivez Votre Modèle",
+      "tcc_pFinally": "Finalement",
+      "tcc_pFinallyD": "Téléversez Votre Trace",
+      "tcc_pOptionnal": "Réglages",
+      "tcc_pOptionnalD": "Gérez Vos Configurations d'Import",
+      "tcc_back": "Retour",
+      "tccs_step": "Étape"
+    }
+}

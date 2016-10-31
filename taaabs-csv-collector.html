@@ -14,6 +14,7 @@
       :host {
         width: 100%;
         display: block;
+        height: 100%;
       }
 
       #container {
@@ -223,6 +224,14 @@
         border-bottom: solid 1px grey;
         margin-bottom: 30px
       }
+
+      :host .part-divs{
+        @apply(--layout-vertical);
+      }
+
+      :host .part-divs-flex{
+        @apply(--layout-flex);
+      }
     </style>
 
     <iron-pages selected="{{_pageIndex}}">
@@ -232,16 +241,16 @@
       <!-- ///////// -->
 
       <div style="max-width: 1000px; margin: 0 auto;">
-        <h4> {{localize('title')}} </h4>
+        <h4> {{localize('tcc_title')}} </h4>
 
         <p>
-          {{localize('subTitle')}}.
+          {{localize('tcc_subTitle')}}.
         </p>
 
         <div id="container">
 
           <div class="arrowLabels" id="arrowOneLabel">
-            {{localize('pFirst')}}
+            {{localize('tcc_pFirst')}}
           </div>
           <div id="arrowOneTop"></div>
           <div id="arrowOneBottom"></div>
@@ -249,7 +258,7 @@
           <div class="tile" id="tileOne">
             <center>
               <p style="margin-bottom:1em;margin-top:1em">
-                {{localize('pFirstD')}}
+                {{localize('tcc_pFirstD')}}
               </p>
               <div on-click="_goToSchema" class="tileButton">
                 Go
@@ -258,7 +267,7 @@
           </div>
 
           <div class="arrowLabels" id="arrowTwoLabel">
-            {{localize('pThen')}}
+            {{localize('tcc_pThen')}}
           </div>
           <div id="arrowTwoTop"></div>
           <div id="arrowTwoBottom"></div>
@@ -266,7 +275,7 @@
           <div class="tile" id="tileTwo">
             <center>
               <p style="margin-bottom:1em;margin-top:1em">
-                {{localize('pThenD')}}
+                {{localize('tcc_pThenD')}}
               </p>
               <div on-click="_goToKtbsModel" class="tileButton">
                 Go
@@ -275,7 +284,7 @@
           </div>
 
           <div class="arrowLabels" id="arrowThreeLabel">
-            {{localize('pFinally')}}
+            {{localize('tcc_pFinally')}}
           </div>
           <div id="arrowThreeTop"></div>
           <div id="arrowThreeBottom"></div>
@@ -283,7 +292,7 @@
           <div class="tile" id="tileThree">
             <center>
               <p style="margin-bottom:1em;margin-top:1em">
-                {{localize('pFinallyD')}}
+                {{localize('tcc_pFinallyD')}}
               </p>
               <div on-click="_goToKtbs" class="tileButton">
                 Go
@@ -293,13 +302,13 @@
 
           <div id="leftOptLabel"></div>
           <div class="arrowLabels" id='OptLabel'>
-            {{localize('pOptionnal')}}
+            {{localize('tcc_pOptionnal')}}
           </div>
           <div id="rightOptLabel"></div>
           <div class="tile" id="tileOpt">
             <center>
               <p style="margin-bottom:1em;margin-top:1em">
-                {{localize('pOptionnalD')}}
+                {{localize('tcc_pOptionnalD')}}
               </p>
               <div class="tileButton">
                 Go
@@ -319,16 +328,16 @@
         <div class="componentTitle">
           <div style="display: table-cell; width: 80%">
             <h3>
-              {{localize('pFirstD')}}
+              {{localize('tcc_pFirstD')}}
               /
-              <span style="opacity: 0.27;font-weight:400"> {{localize('pThenD')}} </span>
+              <span style="opacity: 0.27;font-weight:400"> {{localize('tcc_pThenD')}} </span>
               /
-              <span style="opacity: 0.27;font-weight:400"> {{localize('pFinallyD')}} </span>
+              <span style="opacity: 0.27;font-weight:400"> {{localize('tcc_pFinallyD')}} </span>
             </h3>
             <span style="text-transform:uppercase; font-weight: normal; font-size:12px">{{baseUrl}}</span>
           </div>
           <div style="display: table-cell; width: 20%; text-align:right;">
-            <span class="button" on-click="_backToHome">{{localize('back')}}</span>
+            <span class="button" on-click="_backToHome">{{localize('tcc_back')}}</span>
           </div>
         </div>
         <taaabs-csv-schema id="csvSchema" csv-schemas="{{csvSchemas}}" base="[[_base]]" files="{{files}}" csv-schema="{{csvSchema}}" language="[[language]]">
@@ -339,24 +348,26 @@
       <!-- CSV TO KTBS MODEL DIV -->
       <!-- ///////////////////// -->
 
-      <div>
+      <div class="part-divs">
         <div class="componentTitle">
           <div style="display: table-cell; width: 80%">
             <h3>
-              <span style="opacity: 0.27;font-weight:400"> {{localize('pFirstD')}} </span>
+              <span style="opacity: 0.27;font-weight:400"> {{localize('tcc_pFirstD')}} </span>
               /
-              {{localize('pThenD')}}
+              {{localize('tcc_pThenD')}}
               /
-              <span style="opacity: 0.27;font-weight:400"> {{localize('pFinallyD')}} </span>
+              <span style="opacity: 0.27;font-weight:400"> {{localize('tcc_pFinallyD')}} </span>
             </h3>
             <span style="text-transform:uppercase; font-weight: normal; font-size:12px">{{baseUrl}}</span>
           </div>
           <div style="display: table-cell; width: 20%; text-align:right;">
-            <span class="button" on-click="_backToHome">{{localize('back')}}</span>
+            <span class="button" on-click="_backToHome">{{localize('tcc_back')}}</span>
           </div>
         </div>
-        <taaabs-csv-to-ktbsmodel id="csvToKtbsModel" csv-schemas="{{csvSchemas}}" base="[[_base]]" files="{{files}}" csv-schema="{{csvSchema}}" language="[[language]]">
-        </taaabs-csv-to-ktbsmodel>
+        <div class="part-divs-flex">
+          <taaabs-csv-to-ktbsmodel id="csvToKtbsModel" csv-schemas="{{csvSchemas}}" base="[[_base]]" files="{{files}}" csv-schema="{{csvSchema}}" language="[[language]]">
+          </taaabs-csv-to-ktbsmodel>
+        </div>
       </div>
 
       <!-- /////////////// -->
@@ -367,16 +378,16 @@
         <div class="componentTitle">
           <div style="display: table-cell; width: 80%">
             <h3>
-              <span style="opacity: 0.27;font-weight:400"> {{localize('pFirstD')}} </span>
+              <span style="opacity: 0.27;font-weight:400"> {{localize('tcc_pFirstD')}} </span>
               /
-              <span style="opacity: 0.27;font-weight:400"> {{localize('pThenD')}} </span>
+              <span style="opacity: 0.27;font-weight:400"> {{localize('tcc_pThenD')}} </span>
               /
-              {{localize('pFinallyD')}}
+              {{localize('tcc_pFinallyD')}}
             </h3>
             <span style="text-transform:uppercase; font-weight: normal; font-size:12px">{{baseUrl}}</span>
           </div>
           <div style="display: table-cell; width: 20%; text-align:right;">
-            <span class="button" on-click="_backToHome">{{localize('back')}}</span>
+            <span class="button" on-click="_backToHome">{{localize('tcc_back')}}</span>
           </div>
         </div>
         <taaabs-csv-to-ktbs id="csvToKtbs" base="[[_base]]" csv-schemas="{{csvSchemas}}" files="{{files}}" csv-schema="{{csvSchema}}" language="[[language]]">
@@ -394,10 +405,6 @@
 
       properties: {
 
-        /////////////////////////////////
-        // RESOURCE LOADING PROPERTIES //
-        /////////////////////////////////
-
         /**
          * If true, gets resources by firing `GET_RESOURCE` events.
          * Gets resource in the component otherwise.
@@ -412,10 +419,6 @@
           notify: true,
           value: false
         },
-
-        ///////////////////////////
-        // RESOURCES  PROPERTIES //
-        ///////////////////////////
 
         /**
          * Target base URL.
@@ -456,10 +459,6 @@
           value: ''
         },
 
-        ////////////////////
-        // UI  PROPERTIES //
-        ////////////////////
-
         /**
          * Index of the current page section of the iron-pages.
          *
@@ -471,10 +470,6 @@
           notify: true,
           value: 0
         },
-
-        /////////////§§§§§§§§§§§§///////
-        // IMPORT PROCESS  PROPERTIES //
-        ////////////////////////////////
 
         /**
          * Traces files opened by the user.
@@ -518,10 +513,6 @@
           }
         },
 
-        //////////
-        // I18N //
-        //////////
-
         /**
          * Localization.
          * fr, en.
@@ -542,26 +533,22 @@
 
       listeners: {},
 
-      ready: function() {
-
-        var that = this;
-
-        this.$.csvSchema.addEventListener('SAVE_NEXT', function() {
-          that.$.csvToKtbsModel.$.tcme._getSample();
-          that.$.csvToKtbsModel._goToPage(2);
-          that._goToKtbsModel();
-        });
-
-        this.$.csvToKtbsModel.addEventListener('SAVE_NEXT', function() {
-          that.$.csvToKtbs._goToPage(2);
-          that._goToKtbs();
-        });
-
-      },
+      ready: function() {},
 
       attached: function(){
         // Load i18n json.
-        this.loadResources(this.resolveUrl('./locales.json'));
+        this.loadResources(this.resolveUrl('./languages/locales.json'));
+        // Wait for to the csv schema end event.
+        this.$.csvSchema.addEventListener('SAVE_NEXT', function() {
+          this.$.csvToKtbsModel.$.tcme._getSample();
+          this.$.csvToKtbsModel._goToPage(2);
+          this._goToKtbsModel();
+        }.bind(this));
+        // Wait for the csv to ktbs model end event.
+        this.$.csvToKtbsModel.addEventListener('SAVE_NEXT', function() {
+          this.$.csvToKtbs._goToPage(2);
+          this._goToKtbs();
+        }.bind(this));
       },
 
       /**
