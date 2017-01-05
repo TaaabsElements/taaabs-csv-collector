@@ -758,7 +758,8 @@
             .then(function(){
               this.fire('UPDATE_RESOURCE', {
                 url: this.baseUrl,
-                obj: "_base"
+                obj: "_base",
+                force: true
               });
             }.bind(this))
             .catch( function(err){
