@@ -1,3 +1,4 @@
+<!---- DOM: csv-collector imports ---->
 <link rel="import" href="./taaabs-csv-collector-steps.html">
 <link rel="import" href="./taaabs-csv-collector-files.html">
 <link rel="import" href="./taaabs-csv-collector-configs.html">
@@ -6,11 +7,13 @@
 <link rel="import" href="../taaabs-csv-schema/taaabs-csv-schema.html">
 <link rel="import" href="../taaabs-csv-to-ktbs/taaabs-csv-to-ktbs.html">
 <link rel="import" href="../taaabs-csv-to-ktbsmodel/taaabs-csv-to-ktbsmodel.html">
+<!---- DOM: polymer imports ---->
 <link rel="import" href="../paper-dialog/paper-dialog.html">
+<link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../iron-icon/iron-icon.html">
+<!---- DOM: misc imports ---->
 <link rel="import" href="../notify-toast-behavior/notify-toast-behavior.html">
-<!-- css template -->
 <link rel="import" href="../taaabs-themes/taaabs-theme.html">
 
 <dom-module id="taaabs-csv-collector">
@@ -19,11 +22,10 @@
     <style include="collector-css"></style>
     <style>
       :host {
-        width: 100%;
         display: block;
+        width: 100%;
         height: 100%;
       }
-
       :host .componentTitle {
         display: table;
         table-layout: fixed;
@@ -31,203 +33,149 @@
         margin: 0 auto;
         border-bottom: solid 1px grey;
       }
-
-      :host .part-divs{
-        @apply(--layout-vertical);
-      }
-
-      :host .part-divs-flex{
-        @apply(--layout-flex);
-      }
     </style>
 
     <iron-pages selected="{{_pageIndex}}">
-
-      <!-- ///////// -->
-      <!-- MAIN MENU -->
-      <!-- ///////// -->
-
       <div style="max-width: 1000px; margin: 0 auto;">
 
-        <paper-dialog id="configSettingModal" no-cancel-on-esc-key no-cancel-on-outside-click>
-          <h2>Header</h2>
+        <!---- DOM: modal ---->
+        <paper-dialog id="configSettingModal" style="min-width: 800px; padding:24px" no-cancel-on-esc-key no-cancel-on-outside-click>
+          <h2>[[localize('tcc-modal-title')]]</h2>
           <paper-dialog-scrollable>
-            <table style="width: 100%">
+            <table class="fit-width">
               <tr>
                 <th> ID </th>
                 <th> Label </th>
-                <th> delete </th>
+                <th style="text-align:right">[[localize('tcc-modal-del')]]</th>
               </tr>
-            <template is="dom-repeat" items="{{_configList}}" index-as="index">
-              <tr>
-                <td> {{item.id}} </td>
-                <td> {{item.label}} </td>
-                <td> <iron-icon on-click="_markConfig" class="fgDarkBlue fgDarkBlueH clickable" icon="icons:delete"></iron-icon> </td>
-              </tr>
-            </template>
-  </table>
-  </paper-dialog-scrollable>
-  <div class="buttons">
-    <paper-button on-click="_onConfigSettingCancel" dialog-dismiss>Cancel</paper-button>
-    <paper-button on-click="_onConfigSettingConfirm" dialog-confirm autofocus>Confirm</paper-button>
-  </div>
-  </paper-dialog>
+              <template is="dom-repeat" items="{{_configList}}" index-as="index">
+                <tr class="hoverable no-select clickable" on-click="_markConfig">
+                  <td> {{item.id}} </td>
+                  <td> {{item.label}} </td>
+                  <td style="text-align:right"> <iron-icon class="fgGrey fgGreyH hoverable" icon="icons:delete"></iron-icon> </td>
+                </tr>
+              </template>
+            </table>
+          </paper-dialog-scrollable>
+          <div class="buttons">
+            <paper-button on-click="_onConfigSettingCancel" dialog-dismiss raised noink>Cancel</paper-button>
+            <paper-button on-click="_onConfigSettingConfirm" dialog-confirm autofocus raised noink>Confirm</paper-button>
+          </div>
+        </paper-dialog>
 
+        <h4> {{localize('tcc_title')}} </h4>
+        <p> {{localize('tcc_subTitle')}}.</p>
 
-  <h4> {{localize('tcc_title')}} </h4>
-
-  <p>
-    {{localize('tcc_subTitle')}}.
-  </p>
-
-  <div id="container">
-
-    <div class="arrowLabels" id="arrowOneLabel">
-      {{localize('tcc_pFirst')}}
-    </div>
-    <div id="arrowOneTop"></div>
-    <div id="arrowOneBottom"></div>
-
-    <div class="tile" id="tileOne">
-      <center>
-        <p style="margin-bottom:1em;margin-top:1em">
-          {{localize('tcc_pFirstD')}}
-        </p>
-        <div on-click="_goToSchema" class="tileButton">
-          Go
+        <!---- DOM: main menu ---->
+        <div id="container">
+          <div class="arrowLabels" id="arrowOneLabel">{{localize('tcc_pFirst')}}</div>
+          <div id="arrowOneTop"></div>
+          <div id="arrowOneBottom"></div>
+          <div class="tile" id="tileOne">
+            <center>
+              <p style="margin-bottom:1em;margin-top:1em">{{localize('tcc_pFirstD')}}</p>
+              <div on-click="_goToSchema" class="tileButton">Go</div>
+            </center>
+          </div>
+        <div class="arrowLabels" id="arrowTwoLabel">{{localize('tcc_pThen')}}</div>
+        <div id="arrowTwoTop"></div>
+        <div id="arrowTwoBottom"></div>
+        <div class="tile" id="tileTwo">
+          <center>
+            <p style="margin-bottom:1em;margin-top:1em">{{localize('tcc_pThenD')}}</p>
+            <div on-click="_goToKtbsModel" class="tileButton">Go</div>
+          </center>
         </div>
-      </center>
-    </div>
-
-    <div class="arrowLabels" id="arrowTwoLabel">
-      {{localize('tcc_pThen')}}
-    </div>
-    <div id="arrowTwoTop"></div>
-    <div id="arrowTwoBottom"></div>
-
-    <div class="tile" id="tileTwo">
-      <center>
-        <p style="margin-bottom:1em;margin-top:1em">
-          {{localize('tcc_pThenD')}}
-        </p>
-        <div on-click="_goToKtbsModel" class="tileButton">
-          Go
+        <div class="arrowLabels" id="arrowThreeLabel">{{localize('tcc_pFinally')}}</div>
+        <div id="arrowThreeTop"></div>
+        <div id="arrowThreeBottom"></div>
+        <div class="tile" id="tileThree">
+          <center>
+            <p style="margin-bottom:1em;margin-top:1em">{{localize('tcc_pFinallyD')}}</p>
+            <div on-click="_goToKtbs" class="tileButton">Go</div>
+          </center>
         </div>
-      </center>
-    </div>
-
-    <div class="arrowLabels" id="arrowThreeLabel">
-      {{localize('tcc_pFinally')}}
-    </div>
-    <div id="arrowThreeTop"></div>
-    <div id="arrowThreeBottom"></div>
-
-    <div class="tile" id="tileThree">
-      <center>
-        <p style="margin-bottom:1em;margin-top:1em">
-          {{localize('tcc_pFinallyD')}}
-        </p>
-        <div on-click="_goToKtbs" class="tileButton">
-          Go
+        <div id="leftOptLabel"></div>
+        <div class="arrowLabels" id='OptLabel'>{{localize('tcc_pOptionnal')}}</div>
+        <div id="rightOptLabel"></div>
+        <div class="tile" id="tileOpt">
+          <center>
+            <p style="margin-bottom:1em;margin-top:1em">{{localize('tcc_pOptionnalD')}}</p>
+            <div on-click="_showConfigSettingModal" class="tileButton">Go</div>
+          </center>
         </div>
-      </center>
+        <div id="optBottom"></div>
+      </div>
     </div>
 
-    <div id="leftOptLabel"></div>
-    <div class="arrowLabels" id='OptLabel'>
-      {{localize('tcc_pOptionnal')}}
-    </div>
-    <div id="rightOptLabel"></div>
-    <div class="tile" id="tileOpt">
-      <center>
-        <p style="margin-bottom:1em;margin-top:1em">
-          {{localize('tcc_pOptionnalD')}}
-        </p>
-        <div on-click="_showConfigSettingModal" class="tileButton">
-          Go
+    <!---- DOM: csv-schema ---->
+    <div>
+      <div class="componentTitle">
+        <div style="display: table-cell; width: 80%">
+          <h3>
+                {{localize('tcc_pFirstD')}}
+                /
+                <span style="opacity: 0.27;font-weight:400"> {{localize('tcc_pThenD')}} </span>
+                /
+                <span style="opacity: 0.27;font-weight:400"> {{localize('tcc_pFinallyD')}} </span>
+              </h3>
+          <span style="text-transform:uppercase; font-weight: normal; font-size:12px">{{baseUrl}}</span>
         </div>
-      </center>
+        <div style="display: table-cell; width: 20%; text-align:right;">
+          <span class="button" on-click="_backToHome">{{localize('tcc_back')}}</span>
+        </div>
+      </div>
+      <taaabs-csv-schema id="csv-schema" language="[[language]]">
+      </taaabs-csv-schema>
     </div>
-    <div id="optBottom"></div>
-  </div>
-  </div>
 
-  <!-- ////////////// -->
-  <!-- CSV SCHEMA DIV -->
-  <!-- ////////////// -->
 
-  <div>
-    <div class="componentTitle">
-      <div style="display: table-cell; width: 80%">
-        <h3>
-              {{localize('tcc_pFirstD')}}
-              /
-              <span style="opacity: 0.27;font-weight:400"> {{localize('tcc_pThenD')}} </span>
-              /
-              <span style="opacity: 0.27;font-weight:400"> {{localize('tcc_pFinallyD')}} </span>
-            </h3>
-        <span style="text-transform:uppercase; font-weight: normal; font-size:12px">{{baseUrl}}</span>
+    <!---- DOM: csv-to-ktbs-model ---->
+    <div class="flex-vertical">
+      <div class="componentTitle">
+        <div style="display: table-cell; width: 80%">
+          <h3>
+                <span style="opacity: 0.27;font-weight:400"> {{localize('tcc_pFirstD')}} </span>
+                /
+                {{localize('tcc_pThenD')}}
+                /
+                <span style="opacity: 0.27;font-weight:400"> {{localize('tcc_pFinallyD')}} </span>
+              </h3>
+          <span style="text-transform:uppercase; font-weight: normal; font-size:12px">{{baseUrl}}</span>
+        </div>
+        <div style="display: table-cell; width: 20%; text-align:right;">
+          <span class="button" on-click="_backToHome">{{localize('tcc_back')}}</span>
+        </div>
       </div>
-      <div style="display: table-cell; width: 20%; text-align:right;">
-        <span class="button" on-click="_backToHome">{{localize('tcc_back')}}</span>
-      </div>
-    </div>
-    <taaabs-csv-schema id="csv-schema" language="[[language]]">
-    </taaabs-csv-schema>
-  </div>
-
-  <!-- ///////////////////// -->
-  <!-- CSV TO KTBS MODEL DIV -->
-  <!-- ///////////////////// -->
-
-  <div class="part-divs">
-    <div class="componentTitle">
-      <div style="display: table-cell; width: 80%">
-        <h3>
-              <span style="opacity: 0.27;font-weight:400"> {{localize('tcc_pFirstD')}} </span>
-              /
-              {{localize('tcc_pThenD')}}
-              /
-              <span style="opacity: 0.27;font-weight:400"> {{localize('tcc_pFinallyD')}} </span>
-            </h3>
-        <span style="text-transform:uppercase; font-weight: normal; font-size:12px">{{baseUrl}}</span>
-      </div>
-      <div style="display: table-cell; width: 20%; text-align:right;">
-        <span class="button" on-click="_backToHome">{{localize('tcc_back')}}</span>
+      <div class="flexchild">
+        <taaabs-csv-to-ktbsmodel id="csv-ktbs-model" language="[[language]]">
+        </taaabs-csv-to-ktbsmodel>
       </div>
     </div>
-    <div class="part-divs-flex">
-      <taaabs-csv-to-ktbsmodel id="csv-ktbs-model" language="[[language]]">
-      </taaabs-csv-to-ktbsmodel>
-    </div>
-  </div>
 
-  <!-- /////////////// -->
-  <!-- CSV TO KTBS DIV -->
-  <!-- /////////////// -->
-
-  <div>
-    <div class="componentTitle">
-      <div style="display: table-cell; width: 80%">
-        <h3>
-              <span style="opacity: 0.27;font-weight:400"> {{localize('tcc_pFirstD')}} </span>
-              /
-              <span style="opacity: 0.27;font-weight:400"> {{localize('tcc_pThenD')}} </span>
-              /
-              {{localize('tcc_pFinallyD')}}
-            </h3>
-        <span style="text-transform:uppercase; font-weight: normal; font-size:12px">{{baseUrl}}</span>
+    <!---- DOM: csv-to-ktbs ---->
+    <div>
+      <div class="componentTitle">
+        <div style="display: table-cell; width: 80%">
+          <h3>
+                <span style="opacity: 0.27;font-weight:400"> {{localize('tcc_pFirstD')}} </span>
+                /
+                <span style="opacity: 0.27;font-weight:400"> {{localize('tcc_pThenD')}} </span>
+                /
+                {{localize('tcc_pFinallyD')}}
+              </h3>
+          <span style="text-transform:uppercase; font-weight: normal; font-size:12px">{{baseUrl}}</span>
+        </div>
+        <div style="display: table-cell; width: 20%; text-align:right;">
+          <span class="button" on-click="_backToHome">{{localize('tcc_back')}}</span>
+        </div>
       </div>
-      <div style="display: table-cell; width: 20%; text-align:right;">
-        <span class="button" on-click="_backToHome">{{localize('tcc_back')}}</span>
-      </div>
+      <taaabs-csv-to-ktbs id="csvToKtbs" base="[[_base]]" csv-schemas="{{csvSchemas}}" files="{{files}}" csv-schema="{{csvSchema}}" language="[[language]]">
+      </taaabs-csv-to-ktbs>
     </div>
-    <taaabs-csv-to-ktbs id="csvToKtbs" base="[[_base]]" csv-schemas="{{csvSchemas}}" files="{{files}}" csv-schema="{{csvSchema}}" language="[[language]]">
-    </taaabs-csv-to-ktbs>
-  </div>
   </iron-pages>
 
-  <!-- Notify toast -->
+  <!---- Notify toast ---->
   <paper-toast id="__notify_toast__" style="background-color:rgba(0,0,0,0.37)" duration=0> </paper-toast>
 
   </template>
@@ -241,6 +189,7 @@
 
       properties: {
 
+        // MARk: Properties: Base & Model
         /**
          * If true, gets resources by firing `GET_RESOURCE` events.
          * Gets resource in the component otherwise.
@@ -267,7 +216,6 @@
           notify: true,
           value: ""
         },
-
         /**
          * Current base edited by the user.
          *
@@ -282,7 +230,6 @@
           value: null,
           observer: '_baseChanged'
         },
-
         /**
          * Id of the current `base` edited by the user.
          *
@@ -295,32 +242,7 @@
           value: ''
         },
 
-        /**
-         * Index of the current page section of the iron-pages.
-         *
-         * @attribute _pageIndex
-         * @type Number
-         */
-        _pageIndex: {
-          type: Number,
-          notify: true,
-          value: 0
-        },
-
-        /**
-         * Traces files opened by the user.
-         *
-         * @attribute files
-         * @type Array
-         */
-        files: {
-          type: Array,
-          notify: true,
-          value: function() {
-            return [];
-          }
-        },
-
+        // MARK: Properties: Schemas
         /**
          * Current csv schema used/edited by the user.
          *
@@ -334,7 +256,6 @@
             return {};
           }
         },
-
         /**
          * Array of all existing csv schemas on the current base.
          *
@@ -348,19 +269,6 @@
             return [];
           }
         },
-
-        /**
-         * Localization.
-         * fr, en.
-         *
-         * @attribute language
-         * @type String
-         */
-        language: {
-          type: String,
-          notify: true
-        },
-
         /**
          * List of every csv schemas. Use only for `configSettingModal`.
          *
@@ -372,7 +280,6 @@
           notify: true,
           value: []
         },
-
         /**
          * List of id of marked config for deletion.
          *
@@ -385,6 +292,52 @@
           value: []
         },
 
+        // MARK: Properties: misc
+        /**
+         * Index of the current page section of the iron-pages.
+         *
+         * @attribute _pageIndex
+         * @type Number
+         */
+        _pageIndex: {
+          type: Number,
+          notify: true,
+          value: 0
+        },
+        /**
+         * Traces files opened by the user.
+         *
+         * @attribute files
+         * @type Array
+         */
+        files: {
+          type: Array,
+          notify: true,
+          value: function() {
+            return [];
+          }
+        },
+        /**
+         * Localization.
+         * fr, en.
+         *
+         * @attribute language
+         * @type String
+         */
+        language: {
+          type: String,
+          notify: true
+        },
+        /**
+        * Loading base toast id.
+        *
+        * @attribute _loadingBaseToastID
+        * @type Number
+        */
+        _loadingBaseToastID: {
+          type: Number,
+          notify: true
+        }
       },
 
       behaviors: [
@@ -394,11 +347,12 @@
 
       listeners: {},
 
-      ready: function() {},
-
-      attached: function() {
+      ready: function() {
         // Load i18n json.
         this.loadResources(this.resolveUrl('./languages/locales.json'));
+      },
+
+      attached: function() {
         this.$['csv-schema'].addEventListener('save-next', function() {
           // Set the global collector component
           this.set('_csvSchemas', this.$['csv-schema'].csvSchemas);
@@ -411,6 +365,7 @@
           this.$['csv-schema'].emptyComponent();
         }.bind(this));
         // Wait for the csv to ktbs model end event.
+        //TODO : finish here
         this.$['csv-ktbs-model'].addEventListener('SAVE_NEXT', function() {
           this.$.csvToKtbs._goToPage(2);
           this._goToKtbs();
@@ -420,7 +375,6 @@
       /** --------------------------------------------------------------------
       // MARK: Functions: Init
       **/
-
       /**
        * Loads `_base` according to `baseUrl`.
        *
@@ -430,17 +384,20 @@
        */
       refresh: function() {
         if (this.baseUrl !== "" && this.taaabsCentralLoading) {
-          this.notifyToast("Loading Base....", {
-            type: "Log",
+          // Set the loading toast notification
+          var msg = this.localize('tcc-loading-base');
+          var id = this.notifyToast(msg, {
+            type: "Loading",
             timeout: -1
           });
+          this.set('_loadingBaseToastID', id);
+          // Load the base
           this.fire('GET_RESOURCE', {
             url: this.baseUrl,
             obj: "_base"
           });
         }
       },
-
       /**
        *Triggered when `_base` changes. Set `_baseId` with the suffix of the base url.
        *
@@ -455,28 +412,29 @@
           this._loadCsvSchemas();
         }
       },
-
       /**
        * Set `csvSchemas`.
        *
        * @method _loadCsvSchemas
        */
       _loadCsvSchemas: function() {
+        // Set the csvSchemas if there are some.
         if(this._base.attributes['http://taaabs-hubble/onto#csvCollectorSchemas']){
           this.set('_csvSchemas', JSON.parse(
             this._base.attributes['http://taaabs-hubble/onto#csvCollectorSchemas']
           ));
         }
-        this.notifyToast("Base loaded !", {
-          type: "Log",
-          timeout: -1
+        // Notify the loading success \o/
+        this.closeToast(this._loadingBaseToastID);
+        var msg = this.localize('tcc-base-loaded')
+        this.notifyToast(msg, {
+          type: "Success"
         });
       },
 
       /** --------------------------------------------------------------------
       // MARK: Functions: nav
       **/
-
       /**
        * Called when the user chooses to use `taaabs-csv-schema`.
        * Changes `_pageIndex` to display the right section.
@@ -491,7 +449,6 @@
         this.$['csv-schema'].set('base', this._base);
         window.scrollTo(0, 0);
       },
-
       /**
        * Called when the user chooses to use `taaabs-csv-to-ktbsmodel`.
        * Changes `_pageIndex` to display the right section.
@@ -506,7 +463,6 @@
         this.$['csv-ktbs-model'].set('base', this._base);
         window.scrollTo(0, 0);
       },
-
       /**
        * Called when the user chooses to use `taaabs-csv-to-ktbs`.
        * Changes `_pageIndex` to display the right section.
@@ -519,20 +475,6 @@
         this.set('_pageIndex', 3);
         window.scrollTo(0, 0);
       },
-
-      /**
-       * Called when the user chooses to use `taaabs-csv-verify`.
-       * Changes `_pageIndex` to display the right section.
-       *
-       * @method _goToVerify
-       *
-       * @see _pageIndex
-       */
-      _goToVerify: function() {
-        this.set('_pageIndex', 4);
-        window.scrollTo(0, 0);
-      },
-
       /**
        * Called when the user chooses to go back to the main page.
        * Changes `_pageIndex` to display the right section.
@@ -549,7 +491,6 @@
       /** --------------------------------------------------------------------
       // MARK: Functions: Configs settings
       **/
-
       /**
        * Show the modal `configSettingModal`.
        *
@@ -562,7 +503,6 @@
         );
         this.set('_configList', csvSchemasTmp);
       },
-
       /**
        * Mark a csv schema as deletable (`configSettingModal` function).
        *
@@ -572,20 +512,22 @@
        */
       _markConfig: function(evt) {
         var config = evt.model.item;
-        console.log(config);
         var index = this._markedConfigList.indexOf(config.id);
+        var elem = evt.target;
+        while(elem.tagName !== 'tr' && elem.tagName !== 'TR'){
+          elem = elem.parentNode;
+        }
+        elem = Polymer.dom(elem).querySelector('iron-icon');
         if (index !== -1) {
           this.splice('_markedConfigList', index, 1);
-          evt.target.classList.add('fgDarkBlueH', 'fgDarkBlue');
-          evt.target.classList.remove('fgRedH', 'fgRed');
+          elem.classList.add('fgGreyH', 'fgGrey');
+          elem.classList.remove('fgErrorH', 'fgError');
         } else {
           this.push('_markedConfigList', config.id);
-          evt.target.classList.remove('fgDarkBlueH', 'fgDarkBlue');
-          evt.target.classList.add('fgRedH', 'fgRed');
+          elem.classList.remove('fgGreyH', 'fgGrey');
+          elem.classList.add('fgErrorH', 'fgError');
         }
-        console.log(this._markedConfigList);
       },
-
       /**
        * Cancel the configs marks.
        *
@@ -595,13 +537,16 @@
         this.set('_markedConfigList', []);
         this.set('_configList', []);
       },
-
       /**
        * Confirm the config deletion. Remove them from ktbs.
        *
        * @method _onConfigSettingConfirm
        */
       _onConfigSettingConfirm: function() {
+        var toastId = this.notifyToast(this.localize('tcc-updating-schemas'), {
+          type: 'Loading',
+          timeout: -1
+        });
         var config = [];
         for (var i = 0; i < this._configList.length; i++) {
           if (this._markedConfigList.indexOf(this._configList[i].id) === -1) {
@@ -612,17 +557,25 @@
             ['http://taaabs-hubble/onto#csvCollectorSchemas', JSON.stringify(config)]
           ])
           .then(function() {
+            this.set('_configList', config);
+            this.set('_csvSchemas', config);
+            this.closeToast(toastId);
             this.fire('UPDATE_RESOURCE', {
               url: this.baseUrl,
               obj: "_base",
               force: true
             });
+            var msg = this.localize('tcc-reloading-base');
+            var id = this.notifyToast(msg, {
+              type: 'Loading',
+              timeout: -1
+            });
+            this.set('_loadingBaseToastID', id);
           }.bind(this))
           .catch(function(err) {
             console.log(err);
           });
       }
-
     });
   </script>
 

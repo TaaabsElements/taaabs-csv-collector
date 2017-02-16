@@ -11,6 +11,12 @@
       "tcc_pOptionnal": "Settings",
       "tcc_pOptionnalD": "Manage Your Import Configurations",
       "tcc_back": "Back",
+      "tcc-modal-title": "Choose the configurations you want to delete",
+      "tcc-modal-del": "Delete",
+      "tcc-updating-schemas": "Updating the import configurations list...",
+      "tcc-loading-base": "Loading ktbs base...",
+      "tcc-reloading-base": "Reloading ktbs base...",
+      "tcc-base-loaded": "Ktbs base loaded!",
       "tccs_step": "Step"
     },
     "fr": {
@@ -25,6 +31,12 @@
       "tcc_pOptionnal": "Réglages",
       "tcc_pOptionnalD": "Gérez Vos Configurations d'Import",
       "tcc_back": "Retour",
+      "tcc-modal-title": "Choisissez les configurations que vous voulez supprimer",
+      "tcc-modal-del": "Supprimer",
+      "tcc-updating-schemas": "Mise à jour de la liste des configurations d'import...",
+      "tcc-loading-base": "Chargement de la base ktbs...",
+      "tcc-reloading-base": "Rechargement de la base ktbs...",
+      "tcc-base-loaded": "Base ktbs chargée!",
       "tccs_step": "Étape"
     }
 }
