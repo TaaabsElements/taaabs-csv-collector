@@ -1,6 +1,6 @@
 {
   "name": "taaabs-csv-collector",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "A graphical element in which the user can edit a trace model from some csv files, and then upload the traces.",
   "keywords": [
     "web-components",
