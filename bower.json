@@ -17,7 +17,7 @@
   "main": "taaabs-csv-collector.html",
   "license": "https://github.com/TaaabsElements/taaabs-csv-collector/LICENSE",
   "dependencies": {
-    "polymer": "polymer/polymer#^1.0.0",
+    "polymer": "polymer/polymer",
     "taaabs-themes": "TaaabsElements/taaabs-themes",
     "taaabs-csv-schema": "TaaabsElements/taaabs-csv-schema",
     "taaabs-csv-to-ktbs": "TaaabsElements/taaabs-csv-to-ktbs",
