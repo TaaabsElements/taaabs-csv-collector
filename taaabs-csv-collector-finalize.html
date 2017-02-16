@@ -1,12 +1,29 @@
-<link rel="import" href="../taaabs-themes/taaabs-dark-theme.html">
+<!-- css template -->
+<link rel="import" href="../taaabs-themes/taaabs-theme.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../app-localize-behavior/app-localize-behavior.html">
 <dom-module id="taaabs-csv-collector-finalize">
   <template>
 
-    <style include="taaabs-dark-theme"></style>
+    <style include="taaabs-theme"></style>
     <style>
       :host {
         width: 100%;
         display: block
+      }
+
+      :host .cells{
+        width: 33%;
+        padding: 10px;
+        text-align: center;
+        height: 125px;
+      }
+
+      :host .cellsp{
+        display: block;
+        padding-top: 28px;
+        line-height: 24px;
+        border-bottom: solid 1px gray;
       }
 
       :host .subTitle {
@@ -17,31 +34,36 @@
     </style>
 
     <h4>[[localize('fPHeader')]] ( <span class="subTitle">{{csvSchemaId}}</span> ) </h4>
-    <div style="padding-bottom: 2em ">
-      <div style="padding-bottom: 0.5em">
-        [[localize('fPSaveGo')]]
-      </div>
-      <div on-click="_saveNext" class="button">
-        [[localize('fPSaveGoBtn')]]
-      </div>
-    </div>
-    <div style="padding-bottom: 2em">
-      <div style="padding-bottom: 0.5em">
-        [[localize('fPExport')]]
-      </div>
-      <div on-click="_export" class="button">
-        [[localize('fPExportBtn')]]
-      </div>
-    </div>
-    <div style="padding-bottom: 2em">
-      <div style="padding-bottom: 0.5em">
-        [[localize('fPSaveLeave')]]
-      </div>
-      <div on-click="_saveExit" class="button">
-        [[localize('fPSaveLeaveBtn')]]
-      </div>
-    </div>
 
+    <div class="flex-horizontal flex-equal-justified fit-width">
+
+      <div class="cells flex-vertical flex-equal-justified">
+        <div>
+          <div class="cellsp">[[localize('fPSaveGo')]]</div>
+        </div>
+        <div>
+          <paper-button id="b1" on-click="_saveNext" raised noink>[[localize('fPSaveGoBtn')]]</paper-button>
+        </div>
+      </div>
+
+      <div class="cells flex-vertical flex-equal-justified bgLightGrey100">
+        <div>
+          <div class="cellsp">[[localize('fPExport')]]</div>
+        </div>
+        <div>
+          <paper-button id="b2" on-click="_export" raised noink>[[localize('fPExportBtn')]]</paper-button>
+        </div>
+      </div>
+
+      <div class="cells flex-vertical flex-equal-justified">
+        <div>
+          <div class="cellsp">[[localize('fPSaveLeave')]]</div>
+        </div>
+        <div>
+          <paper-button id="b3" on-click="_saveExit" raised noink>[[localize('fPSaveLeaveBtn')]]</paper-button>
+        </div>
+      </div>
+    </div>
   </template>
   <script>
     /* global Polymer */
@@ -90,7 +112,7 @@
             return {
               "en": {
                 "fPHeader": "Save the import configuration",
-                "fPExport": "Export in a file for local save",
+                "fPExport": "Export in a file for local save \n ",
                 "fPExportBtn": "Export",
                 "fPSaveGo": "Save in the kTBS & go to the next step",
                 "fPSaveGoBtn": "Save & continue",
@@ -99,7 +121,7 @@
               },
               "fr": {
                 "fPHeader": "Sauvegarder la configuration d'import",
-                "fPExport": "Exporter dans un fichier de sauvegarde",
+                "fPExport": "Exporter dans un fichier de sauvegarde \n ",
                 "fPExportBtn": "Exporter",
                 "fPSaveGo": "Sauvegarder dans un ktbs et continuer l'upload de trace",
                 "fPSaveGoBtn": "Sauvegarder et continuer",
@@ -140,7 +162,19 @@
 
       _saveExit: function() {
         this.fire('SAVE_EXIT');
-      }
+      },
+
+      disableAll: function(){
+        this.$.b1.set('disabled', true);
+        this.$.b2.set('disabled', true);
+        this.$.b3.set('disabled', true);
+      },
+
+      enableAll: function(){
+        this.$.b1.set('disabled', false);
+        this.$.b2.set('disabled', false);
+        this.$.b3.set('disabled', false);
+      },
 
     });
   </script>

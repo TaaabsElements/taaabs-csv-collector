@@ -1,31 +1,27 @@
-<link rel="import" href="../taaabs-themes/taaabs-dark-theme.html">
+<!-- css template -->
+<link rel="import" href="../taaabs-themes/taaabs-theme.html">
+<link rel="import" href="../app-localize-behavior/app-localize-behavior.html">
 <dom-module id="taaabs-csv-collector-steps">
   <template>
 
-    <style include="taaabs-dark-theme"></style>
+    <style include="taaabs-theme"></style>
     <style>
       :host {
         width: 100%;
-        display: block
-      }
-
-      :host #container {
-        width: 100%;
-        display: table;
-        table-layout: fixed;
+        display: block;
+        padding: 0px;
       }
 
       :host .cell {
-        display: table-cell;
-        background-color: rgba(255, 255, 255, 0.37);
         padding-left: 10px;
+        width: 250px;
       }
 
       :host .cell:nth-child(1) {
         padding-left: 0px;
       }
 
-      :host .cell> div {
+      :host .cell > div {
         text-align: center;
         padding: 0.38em 1em 0.3em 1em;
       }
@@ -33,7 +29,6 @@
       :host .cellHeader {
         border: solid 1px grey;
         border-bottom: none;
-        cursor: pointer;
       }
 
       :host .cellContent {
@@ -48,10 +43,10 @@
       }
     </style>
 
-    <div id="container">
+    <div id="container" class="flex-horizontal flex-equal-justified fit-width">
       <template is="dom-repeat" items="{{steps}}">
         <div class="cell">
-          <div class$="cellHeader {{_updateColors(item.state)}}" on-click="_cellClicked">
+          <div class$="cellHeader clickable hoverable {{_updateColors(item.state)}}" on-click="_cellClicked">
             [[localize('tccs_step')]] #[[_getRightIndex(index)]]
           </div>
           <div class="cellContent">
@@ -140,10 +135,10 @@
       _updateColors: function(e) {
         switch (e) {
           case 'done':
-            return 'fgWhite ' + 'bgGreen ' + 'bgGreenH';
+            return 'fgWhite ' + 'bgSuccess ' + 'bgSuccessH';
             break;
           case 'undone':
-            return 'fgWhite ' + 'bgRed ' + 'bgRedH ' + 'undone';
+            return 'fgWhite ' + 'bgError ' + 'bgErrorH ' + 'undone';
             break;
           case 'current':
             return '';

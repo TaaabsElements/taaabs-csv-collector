@@ -18,9 +18,16 @@
   "license": "https://github.com/TaaabsElements/taaabs-csv-collector/LICENSE",
   "dependencies": {
     "polymer": "polymer/polymer#^1.0.0",
+    "taaabs-themes": "TaaabsElements/taaabs-themes",
     "taaabs-csv-schema": "TaaabsElements/taaabs-csv-schema",
     "taaabs-csv-to-ktbs": "TaaabsElements/taaabs-csv-to-ktbs",
-    "taaabs-csv-to-ktbsmodel": "TaaabsElements/taaabs-csv-to-ktbsmodel"
+    "taaabs-csv-to-ktbsmodel": "TaaabsElements/taaabs-csv-to-ktbsmodel",
+    "paper-dialog": "PolymerElements/paper-dialog",
+    "iron-icon": "PolymerElements/iron-icon",
+    "iron-icons": "PolymerElements/iron-icons",
+    "app-localize-behavior": "PolymerElements/app-localize-behavior",
+    "notify-toast-behavior": "Yepikae/notify-toast-behavior",
+    "paper-button": "PolymerElements/paper-button"
   },
   "devDependencies": {
     "iron-component-page": "polymerelements/iron-component-page#^1.0.0",

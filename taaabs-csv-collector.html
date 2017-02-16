@@ -1,18 +1,22 @@
-<link rel="import" href="taaabs-csv-collector-steps.html">
-<link rel="import" href="taaabs-csv-collector-files.html">
-<link rel="import" href="taaabs-csv-collector-configs.html">
-<link rel="import" href="taaabs-csv-collector-finalize.html">
-<link rel="import" href="../taaabs-themes/taaabs-dark-theme.html">
+<link rel="import" href="./taaabs-csv-collector-steps.html">
+<link rel="import" href="./taaabs-csv-collector-files.html">
+<link rel="import" href="./taaabs-csv-collector-configs.html">
+<link rel="import" href="./taaabs-csv-collector-finalize.html">
+<link rel="import" href="./styles/css.html">
 <link rel="import" href="../taaabs-csv-schema/taaabs-csv-schema.html">
 <link rel="import" href="../taaabs-csv-to-ktbs/taaabs-csv-to-ktbs.html">
 <link rel="import" href="../taaabs-csv-to-ktbsmodel/taaabs-csv-to-ktbsmodel.html">
 <link rel="import" href="../paper-dialog/paper-dialog.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../notify-toast-behavior/notify-toast-behavior.html">
+<!-- css template -->
+<link rel="import" href="../taaabs-themes/taaabs-theme.html">
 
 <dom-module id="taaabs-csv-collector">
   <template>
-    <style include="taaabs-dark-theme"></style>
+    <style include="taaabs-theme"></style>
+    <style include="collector-css"></style>
     <style>
       :host {
         width: 100%;
@@ -20,212 +24,12 @@
         height: 100%;
       }
 
-      #container {
-        width: 840px;
-        height: 400px;
-        display: block;
-      }
-
-      #container > div {
-        position: absolute;
-        display: block;
-        box-sizing: content-box;
-      }
-
-      .tile p {
-        font-size: 14px;
-        font-family: "Open Sans", Helvetica, sans-serif;
-        text-align: center;
-        text-transform: uppercase;
-        line-height: normal;
-        letter-spacing: normal;
-        box-sizing: content-box;
-      }
-
-      .arrowLabels {
-        font-size: 14px;
-        font-family: "Open Sans", Helvetica, sans-serif;
-        text-align: center;
-        line-height: normal;
-        letter-spacing: normal;
-      }
-
-      .tileButton {
-        width: 80px;
-        text-align: center;
-        padding: 2px;
-        background-color: #ed4933;
-        line-height: normal;
-        letter-spacing: normal;
-        cursor: pointer;
-        color: rgba(255, 255, 255, 0.87);
-        -webkit-transition: background-color .3s ease-in-out;
-        -moz-transition: background-color .3s ease-in-out;
-        -ms-transition: background-color .3s ease-in-out;
-        -o-transition: background-color .3s ease-in-out;
-        transition: background-color .3s ease-in-out;
-      }
-
-      .tileButton:hover {
-        background-color: #ef5e4a;
-        color: rgba(255, 255, 255, 1);
-      }
-
-      #tileOne {
-        width: 100px;
-        height: 100px;
-        margin-top: 60px;
-        margin-left: 180px;
-      }
-
-      #arrowOneLabel {
-        display: block;
-        margin-top: 73px;
-        width: 145px;
-        margin-left: 20px;
-      }
-
-      #arrowOneTop {
-        height: 10px;
-        width: 145px;
-        background-color: #ed4933;
-        margin-top: 95px;
-        margin-left: 20px;
-      }
-
-      #arrowOneBottom {
-        height: 10px;
-        width: 115px;
-        background-color: grey;
-        margin-top: 115px;
-        margin-left: 50px;
-      }
-      /* TILE & ARROW TWO */
-
-      #tileTwo {
-        width: 100px;
-        height: 100px;
-        margin-top: 265px;
-        margin-left: 405px;
-      }
-
-      #arrowTwoLabel {
-        display: block;
-        margin-top: 73px;
-        width: 165px;
-        margin-left: 295px;
-      }
-
-      #arrowTwoTop {
-        height: 160px;
-        width: 145px;
-        border-top: solid 10px #ed4933;
-        border-right: solid 10px #ed4933;
-        margin-top: 95px;
-        margin-left: 295px;
-        z-index: 2
-      }
-
-      #arrowTwoBottom {
-        height: 140px;
-        width: 165px;
-        border-top: solid 10px grey;
-        border-right: solid 10px grey;
-        margin-top: 115px;
-        margin-left: 295px;
-      }
-      /* TILE & ARROW THREE */
-
-      #tileThree {
-        width: 100px;
-        height: 100px;
-        margin-top: 265px;
-        margin-left: 725px;
-      }
-
-      #arrowThreeLabel {
-        display: block;
-        margin-top: 278px;
-        width: 185px;
-        margin-left: 525px;
-      }
-
-      #arrowThreeTop {
-        height: 10px;
-        width: 185px;
-        border-top: solid 10px #ed4933;
-        margin-top: 300px;
-        margin-left: 525px;
-      }
-
-      #arrowThreeBottom {
-        height: 10px;
-        width: 185px;
-        border-top: solid 10px grey;
-        margin-top: 320px;
-        margin-left: 525px;
-      }
-      /* OPTIONNAL PANEL */
-
-      #leftOptLabel {
-        height: 10px;
-        width: 80px;
-        border-top: solid 1px #ed4933;
-        margin-top: 90px;
-        margin-left: 585px;
-      }
-
-      #rightOptLabel {
-        height: 10px;
-        width: 80px;
-        border-top: solid 1px #ed4933;
-        margin-top: 90px;
-        margin-left: 725px;
-      }
-
-      #OptLabel {
-        width: 100px;
-        margin-top: 85px;
-        margin-left: 645px;
-        font-size: 10px;
-        font-family: "Open Sans", Helvetica, sans-serif;
-        line-height: normal;
-        letter-spacing: normal;
-      }
-
-      #tileOpt {
-        width: 220px;
-        margin-left: 585px;
-        margin-top: 26px;
-      }
-
-      #tileOpt p {
-        font-size: 11px;
-        margin-top: 5px;
-      }
-
-      #tileOpt > center > .tileButton {
-        width: 60px;
-        margin-top: -5px;
-        font-size: 10px;
-      }
-
-      #optBottom {
-        width: 220px;
-        height: 10px;
-        margin-left: 585px;
-        margin-top: 20px;
-        border-top: solid 1px #ed4933;
-      }
-      /* Iron Pages Divs */
-
-      .componentTitle {
+      :host .componentTitle {
         display: table;
         table-layout: fixed;
         width: 1000px;
         margin: 0 auto;
         border-bottom: solid 1px grey;
-        margin-bottom: 30px
       }
 
       :host .part-divs{
@@ -368,7 +172,7 @@
         <span class="button" on-click="_backToHome">{{localize('tcc_back')}}</span>
       </div>
     </div>
-    <taaabs-csv-schema id="csvSchema" csv-schemas="{{csvSchemas}}" base="[[_base]]" files="{{files}}" csv-schema="{{csvSchema}}" language="[[language]]">
+    <taaabs-csv-schema id="csv-schema" language="[[language]]">
     </taaabs-csv-schema>
   </div>
 
@@ -393,7 +197,7 @@
       </div>
     </div>
     <div class="part-divs-flex">
-      <taaabs-csv-to-ktbsmodel id="csvToKtbsModel" csv-schemas="{{csvSchemas}}" base="[[_base]]" files="{{files}}" csv-schema="{{csvSchema}}" language="[[language]]">
+      <taaabs-csv-to-ktbsmodel id="csv-ktbs-model" language="[[language]]">
       </taaabs-csv-to-ktbsmodel>
     </div>
   </div>
@@ -421,353 +225,405 @@
     <taaabs-csv-to-ktbs id="csvToKtbs" base="[[_base]]" csv-schemas="{{csvSchemas}}" files="{{files}}" csv-schema="{{csvSchema}}" language="[[language]]">
     </taaabs-csv-to-ktbs>
   </div>
-  <iron-pages>
-    </template>
+  </iron-pages>
 
-    <script>
+  <!-- Notify toast -->
+  <paper-toast id="__notify_toast__" style="background-color:rgba(0,0,0,0.37)" duration=0> </paper-toast>
+
+  </template>
+
+  <script>
+    /**
+     * `taaabs-csv-collector` is a graphical element in which the user can edit a trace model from some csv files, and then upload the traces.
+     */
+    Polymer({
+      is: 'taaabs-csv-collector',
+
+      properties: {
+
+        /**
+         * If true, gets resources by firing `GET_RESOURCE` events.
+         * Gets resource in the component otherwise.
+         *
+         * @see taaabs-resource-loader
+         *
+         * @attribute taaabsCentralLoading
+         * @type Boolean
+         */
+        taaabsCentralLoading: {
+          type: Boolean,
+          notify: true,
+          value: false
+        },
+
+        /**
+         * Target base URL.
+         *
+         * @attribute baseUrl
+         * @type String
+         */
+        baseUrl: {
+          type: String,
+          notify: true,
+          value: ""
+        },
+
+        /**
+         * Current base edited by the user.
+         *
+         * @attribute _base
+         * @type Object
+         *
+         * @see Samotraces
+         */
+        _base: {
+          type: Object,
+          notify: true,
+          value: null,
+          observer: '_baseChanged'
+        },
+
+        /**
+         * Id of the current `base` edited by the user.
+         *
+         * @attribute _baseId
+         * @type String
+         */
+        _baseId: {
+          type: String,
+          notify: true,
+          value: ''
+        },
+
+        /**
+         * Index of the current page section of the iron-pages.
+         *
+         * @attribute _pageIndex
+         * @type Number
+         */
+        _pageIndex: {
+          type: Number,
+          notify: true,
+          value: 0
+        },
+
+        /**
+         * Traces files opened by the user.
+         *
+         * @attribute files
+         * @type Array
+         */
+        files: {
+          type: Array,
+          notify: true,
+          value: function() {
+            return [];
+          }
+        },
+
+        /**
+         * Current csv schema used/edited by the user.
+         *
+         * @attribute csvSchema
+         * @type Object
+         */
+        csvSchema: {
+          type: Object,
+          notify: true,
+          value: function() {
+            return {};
+          }
+        },
+
+        /**
+         * Array of all existing csv schemas on the current base.
+         *
+         * @attribute _csvSchemas
+         * @type Array
+         */
+        _csvSchemas: {
+          type: Array,
+          notify: true,
+          value: function() {
+            return [];
+          }
+        },
+
+        /**
+         * Localization.
+         * fr, en.
+         *
+         * @attribute language
+         * @type String
+         */
+        language: {
+          type: String,
+          notify: true
+        },
+
+        /**
+         * List of every csv schemas. Use only for `configSettingModal`.
+         *
+         * @attribute _configList
+         * @type Array
+         */
+        _configList: {
+          type: Array,
+          notify: true,
+          value: []
+        },
+
+        /**
+         * List of id of marked config for deletion.
+         *
+         * @attribute _markedConfigList
+         * @type Array
+         */
+        _markedConfigList: {
+          type: Array,
+          notify: true,
+          value: []
+        },
+
+      },
+
+      behaviors: [
+        Polymer.AppLocalizeBehavior,
+        NotifyToastBehavior
+      ],
+
+      listeners: {},
+
+      ready: function() {},
+
+      attached: function() {
+        // Load i18n json.
+        this.loadResources(this.resolveUrl('./languages/locales.json'));
+        this.$['csv-schema'].addEventListener('save-next', function() {
+          // Set the global collector component
+          this.set('_csvSchemas', this.$['csv-schema'].csvSchemas);
+          // Set specifically the ktbsmodel component
+          this.$['csv-ktbs-model'].set('csvSchema', this.$['csv-schema'].get('csvSchema'));
+          this.$['csv-ktbs-model'].set('files', this.$['csv-schema'].get('files'));
+          this.$['csv-ktbs-model'].set('fileReader', this.$['csv-schema'].get('fileReader'));
+          this.$['csv-ktbs-model']._goToPage(2);
+          this._goToKtbsModel();
+          this.$['csv-schema'].emptyComponent();
+        }.bind(this));
+        // Wait for the csv to ktbs model end event.
+        this.$['csv-ktbs-model'].addEventListener('SAVE_NEXT', function() {
+          this.$.csvToKtbs._goToPage(2);
+          this._goToKtbs();
+        }.bind(this));
+      },
+
+      /** --------------------------------------------------------------------
+      // MARK: Functions: Init
+      **/
+
       /**
-       * `taaabs-csv-collector` is a graphical element in which the user can edit a trace model from some csv files, and then upload the traces.
+       * Loads `_base` according to `baseUrl`.
+       *
+       * Fires 'GET_RESOURCE' if `taaabs-central-loading` is true.
+       *
+       * @method refresh
        */
-      Polymer({
-        is: 'taaabs-csv-collector',
-
-        properties: {
-
-          /**
-           * If true, gets resources by firing `GET_RESOURCE` events.
-           * Gets resource in the component otherwise.
-           *
-           * @see taaabs-resource-loader
-           *
-           * @attribute taaabsCentralLoading
-           * @type Boolean
-           */
-          taaabsCentralLoading: {
-            type: Boolean,
-            notify: true,
-            value: false
-          },
-
-          /**
-           * Target base URL.
-           *
-           * @attribute baseUrl
-           * @type String
-           */
-          baseUrl: {
-            type: String,
-            notify: true,
-            value: ""
-          },
-
-          /**
-           * Current base edited by the user.
-           *
-           * @attribute _base
-           * @type Object
-           *
-           * @see Samotraces
-           */
-          _base: {
-            type: Object,
-            notify: true,
-            value: null,
-            observer: '_baseChanged'
-          },
-
-          /**
-           * Id of the current `base` edited by the user.
-           *
-           * @attribute _baseId
-           * @type String
-           */
-          _baseId: {
-            type: String,
-            notify: true,
-            value: ''
-          },
-
-          /**
-           * Index of the current page section of the iron-pages.
-           *
-           * @attribute _pageIndex
-           * @type Number
-           */
-          _pageIndex: {
-            type: Number,
-            notify: true,
-            value: 0
-          },
-
-          /**
-           * Traces files opened by the user.
-           *
-           * @attribute files
-           * @type Array
-           */
-          files: {
-            type: Array,
-            notify: true,
-            value: function() {
-              return [];
-            }
-          },
-
-          /**
-           * Current csv schema used/edited by the user.
-           *
-           * @attribute csvSchema
-           * @type Object
-           */
-          csvSchema: {
-            type: Object,
-            notify: true,
-            value: function() {
-              return {};
-            }
-          },
-
-          /**
-           * Array of all existing csv schemas on the current base.
-           *
-           * @attribute csvSchemas
-           * @type Array
-           */
-          csvSchemas: {
-            type: Array,
-            notify: true,
-            value: function() {
-              return [];
-            }
-          },
-
-          /**
-           * Localization.
-           * fr, en.
-           *
-           * @attribute language
-           * @type String
-           */
-          language: {
-            type: String,
-            notify: true
-          },
-
-          /**
-           * List of every csv schemas. Use only for `configSettingModal`.
-           *
-           * @attribute _configList
-           * @type Array
-           */
-          _configList: {
-            type: Array,
-            notify: true,
-            value: []
-          },
-
-          /**
-           * List of id of marked config for deletion.
-           *
-           * @attribute _markedConfigList
-           * @type Array
-           */
-          _markedConfigList: {
-            type: Array,
-            notify: true,
-            value: []
-          },
-
-        },
-
-        behaviors: [
-          Polymer.AppLocalizeBehavior
-        ],
-
-        listeners: {},
-
-        ready: function() {},
-
-        attached: function() {
-          // Load i18n json.
-          this.loadResources(this.resolveUrl('./languages/locales.json'));
-          // Wait for to the csv schema end event.
-          this.$.csvSchema.addEventListener('SAVE_NEXT', function() {
-            this.$.csvToKtbsModel.$.tcme._getSample();
-            this.$.csvToKtbsModel._goToPage(2);
-            this._goToKtbsModel();
-          }.bind(this));
-          // Wait for the csv to ktbs model end event.
-          this.$.csvToKtbsModel.addEventListener('SAVE_NEXT', function() {
-            this.$.csvToKtbs._goToPage(2);
-            this._goToKtbs();
-          }.bind(this));
-        },
-
-        /**
-         * Loads `_base` according to `baseUrl`.
-         *
-         * Fires 'GET_RESOURCE' if `taaabs-central-loading` is true.
-         *
-         * @method refresh
-         */
-        refresh: function() {
-          if (this.baseUrl !== "" && this.taaabsCentralLoading)
-            this.fire('GET_RESOURCE', {
-              url: this.baseUrl,
-              obj: "_base"
-            });
-        },
-
-        /**
-         *Triggered when `_base` changes. Set `_baseId` with the suffix of the base url.
-         *
-         * @method _baseChanged
-         */
-        _baseChanged: function() {
-          if (this._base !== null) {
-            var id = this.baseUrl.split('/');
-            id = id[id.length - 2];
-            this.set('_baseId', id);
-          }
-        },
-
-        /**
-         * Called when the user chooses to use `taaabs-csv-schema`.
-         * Changes `_pageIndex` to display the right section.
-         *
-         * @method _goToSchema
-         *
-         * @see _pageIndex
-         */
-        _goToSchema: function() {
-          this.set('_pageIndex', 1);
-          window.scrollTo(0, 0);
-        },
-
-        /**
-         * Called when the user chooses to use `taaabs-csv-to-ktbsmodel`.
-         * Changes `_pageIndex` to display the right section.
-         *
-         * @method _goToKtbsModel
-         *
-         * @see _pageIndex
-         */
-        _goToKtbsModel: function() {
-          this.set('_pageIndex', 2);
-          window.scrollTo(0, 0);
-        },
-
-        /**
-         * Called when the user chooses to use `taaabs-csv-to-ktbs`.
-         * Changes `_pageIndex` to display the right section.
-         *
-         * @method _goToKtbs
-         *
-         * @see _pageIndex
-         */
-        _goToKtbs: function() {
-          this.set('_pageIndex', 3);
-          window.scrollTo(0, 0);
-        },
-
-        /**
-         * Called when the user chooses to use `taaabs-csv-verify`.
-         * Changes `_pageIndex` to display the right section.
-         *
-         * @method _goToVerify
-         *
-         * @see _pageIndex
-         */
-        _goToVerify: function() {
-          this.set('_pageIndex', 4);
-          window.scrollTo(0, 0);
-        },
-
-        /**
-         * Called when the user chooses to go back to the main page.
-         * Changes `_pageIndex` to display the right section.
-         *
-         * @method _backToHome
-         *
-         * @see _pageIndex
-         */
-        _backToHome: function() {
-          this.set('_pageIndex', 0);
-          window.scrollTo(0, 0);
-        },
-
-        /**
-         * Show the modal `configSettingModal`.
-         *
-         * @method _showConfigSettingModal
-         */
-        _showConfigSettingModal: function() {
-          this.$.configSettingModal.open();
-          var csvSchemasTmp = JSON.parse(
-            this._base.attributes['http://taaabs-hubble/onto#csvCollectorSchemas']
-          );
-          this.set('_configList', csvSchemasTmp);
-        },
-
-        /**
-         * Mark a csv schema as deletable (`configSettingModal` function).
-         *
-         * @param {!required} evt {String} Click event.
-         *
-         * @method _markConfig
-         */
-        _markConfig: function(evt) {
-          var config = evt.model.item;
-          console.log(config);
-          var index = this._markedConfigList.indexOf(config.id);
-          if (index !== -1) {
-            this.splice('_markedConfigList', index, 1);
-            evt.target.classList.add('fgDarkBlueH', 'fgDarkBlue');
-            evt.target.classList.remove('fgRedH', 'fgRed');
-          } else {
-            this.push('_markedConfigList', config.id);
-            evt.target.classList.remove('fgDarkBlueH', 'fgDarkBlue');
-            evt.target.classList.add('fgRedH', 'fgRed');
-          }
-          console.log(this._markedConfigList);
-        },
-
-        /**
-         * Cancel the configs marks.
-         *
-         * @method _onConfigSettingCancel
-         */
-        _onConfigSettingCancel: function() {
-          this.set('_markedConfigList', []);
-          this.set('_configList', []);
-        },
-
-        /**
-         * Confirm the config deletion. Remove them from ktbs.
-         *
-         * @method _onConfigSettingConfirm
-         */
-        _onConfigSettingConfirm: function() {
-          var config = [];
-          for(var i = 0; i < this._configList.length; i++){
-            if(this._markedConfigList.indexOf(this._configList[i].id) === -1){
-              config.push(this._configList[i]);
-            }
-          }
-          this._base.modify_attributes([['http://taaabs-hubble/onto#csvCollectorSchemas', JSON.stringify(config)]])
-            .then(function(){
-              this.fire('UPDATE_RESOURCE', {
-                url: this.baseUrl,
-                obj: "_base",
-                force: true
-              });
-            }.bind(this))
-            .catch( function(err){
-              console.log(err);
-            });
+      refresh: function() {
+        if (this.baseUrl !== "" && this.taaabsCentralLoading) {
+          this.notifyToast("Loading Base....", {
+            type: "Log",
+            timeout: -1
+          });
+          this.fire('GET_RESOURCE', {
+            url: this.baseUrl,
+            obj: "_base"
+          });
         }
+      },
 
-      });
-    </script>
+      /**
+       *Triggered when `_base` changes. Set `_baseId` with the suffix of the base url.
+       *
+       * @method _baseChanged
+       */
+      _baseChanged: function() {
+        if (this._base !== null) {
+          var id = this.baseUrl.split('/');
+          id = id[id.length - 2];
+          this.set('_baseId', id);
+          // Load schemas
+          this._loadCsvSchemas();
+        }
+      },
+
+      /**
+       * Set `csvSchemas`.
+       *
+       * @method _loadCsvSchemas
+       */
+      _loadCsvSchemas: function() {
+        if(this._base.attributes['http://taaabs-hubble/onto#csvCollectorSchemas']){
+          this.set('_csvSchemas', JSON.parse(
+            this._base.attributes['http://taaabs-hubble/onto#csvCollectorSchemas']
+          ));
+        }
+        this.notifyToast("Base loaded !", {
+          type: "Log",
+          timeout: -1
+        });
+      },
+
+      /** --------------------------------------------------------------------
+      // MARK: Functions: nav
+      **/
+
+      /**
+       * Called when the user chooses to use `taaabs-csv-schema`.
+       * Changes `_pageIndex` to display the right section.
+       *
+       * @method _goToSchema
+       *
+       * @see _pageIndex
+       */
+      _goToSchema: function() {
+        this.set('_pageIndex', 1);
+        this.$['csv-schema'].set('csvSchemas', this._csvSchemas);
+        this.$['csv-schema'].set('base', this._base);
+        window.scrollTo(0, 0);
+      },
+
+      /**
+       * Called when the user chooses to use `taaabs-csv-to-ktbsmodel`.
+       * Changes `_pageIndex` to display the right section.
+       *
+       * @method _goToKtbsModel
+       *
+       * @see _pageIndex
+       */
+      _goToKtbsModel: function() {
+        this.set('_pageIndex', 2);
+        this.$['csv-ktbs-model'].set('csvSchemas', this._csvSchemas);
+        this.$['csv-ktbs-model'].set('base', this._base);
+        window.scrollTo(0, 0);
+      },
+
+      /**
+       * Called when the user chooses to use `taaabs-csv-to-ktbs`.
+       * Changes `_pageIndex` to display the right section.
+       *
+       * @method _goToKtbs
+       *
+       * @see _pageIndex
+       */
+      _goToKtbs: function() {
+        this.set('_pageIndex', 3);
+        window.scrollTo(0, 0);
+      },
+
+      /**
+       * Called when the user chooses to use `taaabs-csv-verify`.
+       * Changes `_pageIndex` to display the right section.
+       *
+       * @method _goToVerify
+       *
+       * @see _pageIndex
+       */
+      _goToVerify: function() {
+        this.set('_pageIndex', 4);
+        window.scrollTo(0, 0);
+      },
+
+      /**
+       * Called when the user chooses to go back to the main page.
+       * Changes `_pageIndex` to display the right section.
+       *
+       * @method _backToHome
+       *
+       * @see _pageIndex
+       */
+      _backToHome: function() {
+        this.set('_pageIndex', 0);
+        window.scrollTo(0, 0);
+      },
+
+      /** --------------------------------------------------------------------
+      // MARK: Functions: Configs settings
+      **/
+
+      /**
+       * Show the modal `configSettingModal`.
+       *
+       * @method _showConfigSettingModal
+       */
+      _showConfigSettingModal: function() {
+        this.$.configSettingModal.open();
+        var csvSchemasTmp = JSON.parse(
+          this._base.attributes['http://taaabs-hubble/onto#csvCollectorSchemas']
+        );
+        this.set('_configList', csvSchemasTmp);
+      },
+
+      /**
+       * Mark a csv schema as deletable (`configSettingModal` function).
+       *
+       * @param {!required} evt {String} Click event.
+       *
+       * @method _markConfig
+       */
+      _markConfig: function(evt) {
+        var config = evt.model.item;
+        console.log(config);
+        var index = this._markedConfigList.indexOf(config.id);
+        if (index !== -1) {
+          this.splice('_markedConfigList', index, 1);
+          evt.target.classList.add('fgDarkBlueH', 'fgDarkBlue');
+          evt.target.classList.remove('fgRedH', 'fgRed');
+        } else {
+          this.push('_markedConfigList', config.id);
+          evt.target.classList.remove('fgDarkBlueH', 'fgDarkBlue');
+          evt.target.classList.add('fgRedH', 'fgRed');
+        }
+        console.log(this._markedConfigList);
+      },
+
+      /**
+       * Cancel the configs marks.
+       *
+       * @method _onConfigSettingCancel
+       */
+      _onConfigSettingCancel: function() {
+        this.set('_markedConfigList', []);
+        this.set('_configList', []);
+      },
+
+      /**
+       * Confirm the config deletion. Remove them from ktbs.
+       *
+       * @method _onConfigSettingConfirm
+       */
+      _onConfigSettingConfirm: function() {
+        var config = [];
+        for (var i = 0; i < this._configList.length; i++) {
+          if (this._markedConfigList.indexOf(this._configList[i].id) === -1) {
+            config.push(this._configList[i]);
+          }
+        }
+        this._base.modify_attributes([
+            ['http://taaabs-hubble/onto#csvCollectorSchemas', JSON.stringify(config)]
+          ])
+          .then(function() {
+            this.fire('UPDATE_RESOURCE', {
+              url: this.baseUrl,
+              obj: "_base",
+              force: true
+            });
+          }.bind(this))
+          .catch(function(err) {
+            console.log(err);
+          });
+      }
+
+    });
+  </script>
 
 </dom-module>

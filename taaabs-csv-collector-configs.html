@@ -1,95 +1,89 @@
-<link rel="import" href="../taaabs-themes/taaabs-dark-theme.html">
+<link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../app-localize-behavior/app-localize-behavior.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<!-- css template -->
+<link rel="import" href="../taaabs-themes/taaabs-theme.html">
 <dom-module id="taaabs-csv-collector-configs">
   <template>
 
-    <style include="taaabs-dark-theme"></style>
+    <style include="taaabs-theme"></style>
     <style>
 
       :host{
         width: 100%;
-        display: block
-      }
-
-      :host #container{
-        display: table;
-        table-layout: fixed;
-        width: 100%;
+        display: block;
+        padding: 0px;
       }
 
       :host .cells{
-        display: table-cell;
         width: 33%;
-        border-right: solid 1px grey;
-        padding-right: 10px;
+        padding: 10px;
         text-align: center;
+        height: 125px;
       }
 
-      :host .cells > div{
-        display: table;
-        width: 100%;
-        height: 170px;
-        padding:15px;
+      :host .cellsp{
+        display: block;
+        padding-top: 28px;
+        line-height: 24px;
+        border-bottom: solid 1px gray;
       }
 
-      :host .cells > div > div{
-        display:table-row;
+      :host .secondary-item{
+        line-height: 18px;
+        margin-bottom: 6px;
       }
 
-      :host .button{
-        width: 90%
-      }
-
-      input[type="file"]{
+      :host input[type="file"]{
         opacity: 0;
         pointer-events: none;
       }
 
     </style>
 
-    <h4>{{_i18n.iCIHeader.default}}</h4>
-    <div id="container">
+    <h4>{{localize('iCIHeader')}}</h4>
 
-      <div class="cells" style="border-left: solid 1px grey">
+    <div class="flex-horizontal flex-equal-justified fit-width">
+
+      <div class="cells flex-vertical flex-equal-justified">
         <div>
-          <div style="height: 100%;">
-            <p>{{_i18n.iCICreate.default}}</p>
-          </div>
-          <div>
-            <div class="button" on-click="_createCsvSchema">{{_i18n.iCICreateBtn.default}}</div>
-          </div>
+          <div class="cellsp">{{localize('iCICreate')}}</div>
+        </div>
+        <div>
+          <paper-button on-click="_createCsvSchema" raised noink>{{localize('iCICreateBtn')}}</paper-button>
         </div>
       </div>
 
-      <div class="cells">
+      <div class="cells flex-vertical flex-equal-justified bgLightGrey100">
         <div>
-          <div style="height: 100%;">
-            <p> <span>{{_i18n.iCISelect.default}}</span> </p>
-            <select id="selectcsvSchema" style="width: 100%">
-              <template is="dom-repeat" items="{{csvSchemas}}">
-                <option value="{{index}}"><span>{{item.id}}</span> ( <span>{{item.label}}</span> )</option>
+          <paper-dropdown-menu label="{{localize('iCISelect')}}" class="fit-width" noink>
+            <paper-listbox id="selectcsvSchema" class="dropdown-content">
+              <template is="dom-repeat" items="[[csvSchemas]]">
+                <paper-item value="{{index}}" class="hoverable bgLightGrey100H">
+                  <paper-item-body two-line>
+                    <div>{{item.id}}</div>
+                    <div class="secondary-item small fgGrey">{{item.label}}</div>
+                  </paper-item-body>
+                </paper-item>
               </template>
-            </select>
-          </div>
-          <div>
-            <div class="button" on-click="_selectCsvSchema">{{_i18n.iCISelectBtn.default}}</div>
-          </div>
+            </paper-listbox>
+          </paper-dropdown-menu>
+        </div>
+        <div>
+          <paper-button on-click="_selectCsvSchema" raised noink>{{localize('iCISelectBtn')}}</paper-button>
         </div>
       </div>
 
-
-      <div class="cells">
+      <div class="cells flex-vertical flex-equal-justified">
         <div>
-          <div style="height: 100%;">
-            <p> <span>{{_i18n.iCIUpload.default}}</span> </p>
-          </div>
-          <div>
-            <input type="file" id="files" name="files[]" on-change="_getCsvModel" ></input>
-            <div class="button" on-click="_openFiles">{{_i18n.files.default}}</div>
-          </div>
+          <div class="cellsp">{{localize('iCIUpload')}}</div>
+        </div>
+        <div>
+          <input type="file" id="files" name="files[]" on-change="_getCsvModel"></input>
+          <paper-button on-click="_openFiles" raised noink>{{localize('files')}}</paper-button>
         </div>
       </div>
     </div>
-
   </template>
 
   <script>
@@ -100,31 +94,31 @@
       is: 'taaabs-csv-collector-configs',
 
       /**
-      * Fired when the chooses an existing schema.
-      *
-      * The event has the following parameter :
-      *
-      *     {
-      *       index : <index_of_the_selected_csvSchema>
-      *     }
-      *
-      * @event SELECT_SCHEMA
-      */
+       * Fired when the chooses an existing schema.
+       *
+       * The event has the following parameter :
+       *
+       *     {
+       *       index : <index_of_the_selected_csvSchema>
+       *     }
+       *
+       * @event SELECT_SCHEMA
+       */
 
       /**
-      * Fired when the chooses to create a new schema.
-      *
-      * @event CREATE_SCHEMA
-      */
+       * Fired when the chooses to create a new schema.
+       *
+       * @event CREATE_SCHEMA
+       */
 
       properties: {
 
         /**
-        * Array of all existing csv schemas on the current base.
-        *
-        * @attribute csvSchemas
-        * @type Array
-        */
+         * Array of all existing csv schemas on the current base.
+         *
+         * @attribute csvSchemas
+         * @type Array
+         */
         csvSchemas: {
           type: Array,
           value: []
@@ -135,93 +129,71 @@
         ///////////////
 
         /**
-        * Localization object.
-        *
-        * @attribute _i18n
-        * @type Object
-        */
-        _i18n: {
-            type: Object,
-            value: {
-              "iCIHeader":{
-            	  "default":"Create, select or upload an import configuration",
-            	  "en":"Create, select or upload an import configuration",
-            	  "fr":"Créez, sélectionnez ou uploadez une configuration d'import"
-            	},
-            	"iCICreate":{
-            	  "default":"Create a new import configuration",
-            	  "en":"Create a new import configuration",
-            	  "fr":"Créez une nouvelle configuration d'import"
-            	},
-            	"iCICreateBtn":{
-            	  "default":"Create",
-            	  "en":"Create",
-            	  "fr":"Créer"
-            	},
-            	"iCISelect":{
-            	  "default":"Select an existing import configuration",
-            	  "en":"Select an existing import configuration",
-            	  "fr":"Sélectionnez une configuration d'import"
-            	},
-            	"iCISelectBtn":{
-            	  "default":"Select",
-            	  "en":"Select",
-            	  "fr":"Selectionner"
-            	},
-            	"iCIUpload":{
-            	  "default":"Upload an import configuration from a file",
-            	  "en":"Upload an import configuration from a file",
-            	  "fr":"Uploadez une configuration d'import à partir d'un fichier"
-            	},
-              "files":{
-            	  "default":"Upload config file",
-            	  "en":"Upload config file",
-            	  "fr":"Charger un fichier de config"
-            	}
-            },
-            notify: true
+         * Localization object.
+         *
+         * @attribute resources
+         * @type Object
+         */
+        resources: {
+          type: Object,
+          value: function() {
+            return {
+              "en": {
+                "iCIHeader": "Create, select or upload an import configuration",
+                "iCICreate": "Create a new import configuration",
+                "iCICreateBtn": "Create",
+                "iCISelect": "Select an existing import configuration",
+                "iCISelectBtn": "Select",
+                "iCIUpload": "Upload an import configuration from a file",
+                "files": "Upload config file"
+              },
+              "fr": {
+                "iCIHeader": "Créez, sélectionnez ou uploadez une configuration d'import",
+                "iCICreate": "Créez une nouvelle configuration d'import",
+                "iCICreateBtn": "Créer",
+                "iCISelect": "Sélectionnez une configuration d'import",
+                "iCISelectBtn": "Selectionner",
+                "iCIUpload": "Televersez une configuration d'import à partir d'un fichier",
+                "files": "Charger un fichier de config"
+              }
+            }
+          },
+          notify: true
         },
 
         /**
-        * Localization.
-        * fr, en.
-        *
-        * @attribute language
-        * @type String
-        */
+         * Localization.
+         * fr, en.
+         *
+         * @attribute language
+         * @type String
+         */
         language: {
-            type: String,
-            notify: true,
-            observer: "_languageChanged"
+          type: String,
+          notify: true,
+          value: 'en'
         }
       },
 
-      ready: function(){
+      behaviors: [
+        Polymer.AppLocalizeBehavior
+      ],
+
+      ready: function() {
 
       },
 
-      /**
-      * Triggered when the language option is changed.
-      * Switches every text into the new language.
-      *
-      * @method _languageChanged
-      */
-      _languageChanged: function(){
-        for(var prop in this._i18n) {
-          var tmp = "_i18n."+prop+".default";
-          this.set(tmp, this._i18n[prop][this.language]);
-        }
+      _selectCsvSchema: function(e) {
+        this.fire('SELECT_SCHEMA', {
+          index: this.$.selectcsvSchema.selected
+        });
       },
 
-      _selectCsvSchema: function(e){
-        this.fire('SELECT_SCHEMA',{index:this.$.selectcsvSchema.value});
-      },
-
-      _createCsvSchema: function(){
+      _createCsvSchema: function() {
         this.fire('CREATE_SCHEMA');
       },
 
-      _openFiles: function(){
+      _openFiles: function() {
         this.$.files.click();
       }
 

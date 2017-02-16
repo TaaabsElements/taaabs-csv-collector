@@ -1,18 +1,20 @@
-<link rel="import" href="../taaabs-themes/taaabs-dark-theme.html">
 <link rel="import" href="../file-reader/file-reader.html">
+<!-- css template -->
+<link rel="import" href="../taaabs-themes/taaabs-theme.html">
+<link rel="import" href="../app-localize-behavior/app-localize-behavior.html">
 <dom-module id="taaabs-csv-collector-files">
   <template>
 
-    <style include="taaabs-dark-theme"></style>
+    <style include="taaabs-theme"></style>
     <style>
       :host {
         width: 100%;
-        display: block
+        display: block;
+        padding: 0px;
       }
 
       :host .editIcons {
         float: right;
-        cursor: pointer;
       }
 
       :host #submit {
@@ -20,14 +22,14 @@
       }
     </style>
 
-    <iron-icon icon="icons:close" class="editIcons fgRed fgRedH" id="cancel" on-click="_cancel">
+    <iron-icon icon="icons:close" class="editIcons clickable hoverable fgError fgErrorH" id="cancel" on-click="_cancel">
     </iron-icon>
-    <iron-icon icon="icons:forward" class="editIcons fgGreen fgGreenH" id="submit" on-click="_submit">
+    <iron-icon icon="icons:forward" class="editIcons clickable hoverable fgSuccess fgSuccessH" id="submit" on-click="_submit">
     </iron-icon>
     <h4> <span>[[localize('fSHeader')]]</span> </h4>
-    <file-reader id="filereaderElem" files={{files}}></file-reader>
+    <file-reader id="filereaderElem" files={{files}} language="[[language]]"></file-reader>
     <div style="line-height: normal; letter-spacing: normal; font-size:16px; margin-top: 30px; ">
-      <table>
+      <table class="fit-width">
         <tr>
           <th><span>[[localize('fSFileName')]]</span></th>
           <th><span>[[localize('fSFileSize')]]</span></th>
@@ -124,10 +126,8 @@
       ready: function() {
         // Set the `_filereader`.
         this.set('fileReader', this.$.filereaderElem);
-
         // Create a pointer to `this` for later.
         var that = this;
-
         // Function triggered when the user has chosen some files with the
         //`_filereader`.
         this.fileReader.returnFunction = function() {

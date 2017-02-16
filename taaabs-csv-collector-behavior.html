@@ -1,0 +1,139 @@
+<script>
+    TaaabsCSVCollectorBehavior = {
+
+      properties: {
+
+        /**
+        * The base.
+        *
+        * @attribute base
+        * @type Object
+        */
+        base: {
+         type: Object,
+         notify: true,
+         value: null
+        },
+
+        /**
+        * Current csv schema used/edited by the user.
+        *
+        * @attribute csvSchema
+        * @type Object
+        */
+        csvSchema: {
+          type: Object,
+          notify: true,
+          value: null
+        },
+        /**
+        * Current csv schema used/edited by the user.
+        *
+        * @attribute csvSchema
+        * @type Object
+        */
+        csvSchemas: {
+          type: Array,
+          notify: true,
+          value: null
+        },
+        /**
+        * Traces files opened by the user.
+        *
+        * @attribute files
+        * @type Array
+        */
+        files: {
+          type: Array,
+          notify: true,
+          value: function(){
+            return [];
+          }
+        },
+        /**
+        * A file-reader element
+        *
+        * @attribute fileReader
+        * @type Object
+        */
+        fileReader: {
+         type: Object,
+         notify: true
+        },
+      },
+
+      listeners: {},
+
+      /**
+       * Clone a csvSchema from `csvSchemas`.
+       *
+       * @param {!required} id {String} The id of the csvSchema to clone.
+       *
+       * @method _cloneCsvSchemas
+       */
+      _cloneCsvSchemas: function(id){
+        for(var i = 0; i < this.csvSchemas.length; i++){
+          if(this.csvSchemas[i].id === id) return JSON.parse(JSON.stringify(this.csvSchemas[i]));
+        }
+        return null;
+      },
+
+      /**
+       * Create a new csvSchema.
+       *
+       * @method _createCsvSchema
+       */
+      _createCsvSchema: function(){
+        var csvSchema = {
+          "id": "",
+          "label": "",
+          "columnHeader": true,
+          "separator": ";",
+          "commentSymbol": "",
+          "columns": []
+        };
+        return csvSchema;
+      },
+
+      /**
+       * Save the csv schema onto a base. Return a nex promise.
+       *
+       * @method _saveSchemaOntoBase
+       */
+      _saveSchemaOntoBase: function(csvSchemas, base){
+        var csvContent = JSON.stringify( csvSchemas );
+        var new_attr = [["http://taaabs-hubble/onto#csvCollectorSchemas",csvContent]];
+        return new Promise(function(resolve, reject){
+          base.modify_attributes(new_attr)
+              .then(function(data){
+                resolve(data);
+              })
+              .catch(function(err){
+                reject(err);
+              });
+        });
+      },
+
+      _isIdValid: function(id, newId){
+        var forbidenChars = [' ', '\\', '#'];
+        for (var i = 0; i < forbidenChars.length; i++) {
+          if (id.indexOf(forbidenChars[i]) !== -1) return false;
+        }
+        if(newId){
+          for (var i = 0; i < this.csvSchemas.length; i++) {
+            if (this.csvSchemas[i] !== this.csvSchema && id === this.csvSchemas[i].id) return false;
+          }
+        }
+        return true;
+      },
+
+      emptyComponent: function(){
+        this.set('csvSchema', null);
+        this.set('csvSchemas', null);
+        this.set('base', null);
+        this.set('files', null);
+        this.set('fileReader', null);
+        this._emptyComponent();
+      }
+    };
+</script>

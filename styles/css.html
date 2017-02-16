@@ -1,0 +1,203 @@
+<dom-module id="collector-css">
+  <template>
+    <style>
+    #container {
+      width: 840px;
+      height: 400px;
+      display: block;
+    }
+
+    #container > div {
+      position: absolute;
+      display: block;
+      box-sizing: content-box;
+    }
+
+    .tile p {
+      font-size: 14px;
+      font-family: "Open Sans", Helvetica, sans-serif;
+      text-align: center;
+      text-transform: uppercase;
+      line-height: normal;
+      letter-spacing: normal;
+      box-sizing: content-box;
+    }
+
+    .arrowLabels {
+      font-size: 14px;
+      font-family: "Open Sans", Helvetica, sans-serif;
+      text-align: center;
+      line-height: normal;
+      letter-spacing: normal;
+    }
+
+    .tileButton {
+      width: 80px;
+      text-align: center;
+      padding: 2px;
+      background-color: #ed4933;
+      line-height: normal;
+      letter-spacing: normal;
+      cursor: pointer;
+      color: rgba(255, 255, 255, 0.87);
+      -webkit-transition: background-color .3s ease-in-out;
+      -moz-transition: background-color .3s ease-in-out;
+      -ms-transition: background-color .3s ease-in-out;
+      -o-transition: background-color .3s ease-in-out;
+      transition: background-color .3s ease-in-out;
+    }
+
+    .tileButton:hover {
+      background-color: #ef5e4a;
+      color: rgba(255, 255, 255, 1);
+    }
+
+    #tileOne {
+      width: 100px;
+      height: 100px;
+      margin-top: 60px;
+      margin-left: 180px;
+    }
+
+    #arrowOneLabel {
+      display: block;
+      margin-top: 73px;
+      width: 145px;
+      margin-left: 20px;
+    }
+
+    #arrowOneTop {
+      height: 10px;
+      width: 145px;
+      background-color: #ed4933;
+      margin-top: 95px;
+      margin-left: 20px;
+    }
+
+    #arrowOneBottom {
+      height: 10px;
+      width: 115px;
+      background-color: grey;
+      margin-top: 115px;
+      margin-left: 50px;
+    }
+    /* TILE & ARROW TWO */
+
+    #tileTwo {
+      width: 100px;
+      height: 100px;
+      margin-top: 265px;
+      margin-left: 405px;
+    }
+
+    #arrowTwoLabel {
+      display: block;
+      margin-top: 73px;
+      width: 165px;
+      margin-left: 295px;
+    }
+
+    #arrowTwoTop {
+      height: 160px;
+      width: 145px;
+      border-top: solid 10px #ed4933;
+      border-right: solid 10px #ed4933;
+      margin-top: 95px;
+      margin-left: 295px;
+      z-index: 2
+    }
+
+    #arrowTwoBottom {
+      height: 140px;
+      width: 165px;
+      border-top: solid 10px grey;
+      border-right: solid 10px grey;
+      margin-top: 115px;
+      margin-left: 295px;
+    }
+    /* TILE & ARROW THREE */
+
+    #tileThree {
+      width: 100px;
+      height: 100px;
+      margin-top: 265px;
+      margin-left: 725px;
+    }
+
+    #arrowThreeLabel {
+      display: block;
+      margin-top: 278px;
+      width: 185px;
+      margin-left: 525px;
+    }
+
+    #arrowThreeTop {
+      height: 10px;
+      width: 185px;
+      border-top: solid 10px #ed4933;
+      margin-top: 300px;
+      margin-left: 525px;
+    }
+
+    #arrowThreeBottom {
+      height: 10px;
+      width: 185px;
+      border-top: solid 10px grey;
+      margin-top: 320px;
+      margin-left: 525px;
+    }
+    /* OPTIONNAL PANEL */
+
+    #leftOptLabel {
+      height: 10px;
+      width: 80px;
+      border-top: solid 1px #ed4933;
+      margin-top: 90px;
+      margin-left: 585px;
+    }
+
+    #rightOptLabel {
+      height: 10px;
+      width: 80px;
+      border-top: solid 1px #ed4933;
+      margin-top: 90px;
+      margin-left: 725px;
+    }
+
+    #OptLabel {
+      width: 100px;
+      margin-top: 85px;
+      margin-left: 645px;
+      font-size: 10px;
+      font-family: "Open Sans", Helvetica, sans-serif;
+      line-height: normal;
+      letter-spacing: normal;
+    }
+
+    #tileOpt {
+      width: 220px;
+      margin-left: 585px;
+      margin-top: 26px;
+    }
+
+    #tileOpt p {
+      font-size: 11px;
+      margin-top: 5px;
+    }
+
+    #tileOpt > center > .tileButton {
+      width: 60px;
+      margin-top: -5px;
+      font-size: 10px;
+    }
+
+    #optBottom {
+      width: 220px;
+      height: 10px;
+      margin-left: 585px;
+      margin-top: 20px;
+      border-top: solid 1px #ed4933;
+    }
+    </style>
+  </template>
+</dom-module>
