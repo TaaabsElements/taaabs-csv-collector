@@ -41,16 +41,16 @@
 
     </style>
 
-    <h4>{{localize('iCIHeader')}}</h4>
+    <h4>[[localize('iCIHeader')]]</h4>
 
     <div class="flex-horizontal flex-equal-justified fit-width">
 
       <div class="cells flex-vertical flex-equal-justified">
         <div>
-          <div class="cellsp">{{localize('iCICreate')}}</div>
+          <div class="cellsp">[[localize('iCICreate')]]</div>
         </div>
         <div>
-          <paper-button on-click="_createCsvSchema" raised noink>{{localize('iCICreateBtn')}}</paper-button>
+          <paper-button on-click="_createCsvSchema" raised noink>[[localize('iCICreateBtn')]]</paper-button>
         </div>
       </div>
 
@@ -61,8 +61,8 @@
               <template is="dom-repeat" items="[[csvSchemas]]">
                 <paper-item value="{{index}}" class="hoverable bgLightGrey100H">
                   <paper-item-body two-line>
-                    <div>{{item.id}}</div>
-                    <div class="secondary-item small fgGrey">{{item.label}}</div>
+                    <div>[[item.id]]</div>
+                    <div class="secondary-item small fgGrey">[[tem.label]]</div>
                   </paper-item-body>
                 </paper-item>
               </template>
@@ -70,17 +70,17 @@
           </paper-dropdown-menu>
         </div>
         <div>
-          <paper-button on-click="_selectCsvSchema" raised noink>{{localize('iCISelectBtn')}}</paper-button>
+          <paper-button on-click="_selectCsvSchema" raised noink>[[localize('iCISelectBtn')]]</paper-button>
         </div>
       </div>
 
       <div class="cells flex-vertical flex-equal-justified">
         <div>
-          <div class="cellsp">{{localize('iCIUpload')}}</div>
+          <div class="cellsp">[[localize('iCIUpload')]]</div>
         </div>
         <div>
           <input type="file" id="files" name="files[]" on-change="_getCsvModel"></input>
-          <paper-button on-click="_openFiles" raised noink>{{localize('files')}}</paper-button>
+          <paper-button on-click="_openFiles" raised noink>[[localize('files')]]</paper-button>
         </div>
       </div>
     </div>
@@ -102,7 +102,7 @@
        *       index : <index_of_the_selected_csvSchema>
        *     }
        *
-       * @event SELECT_SCHEMA
+       * @event select-schema
        */
 
       /**
@@ -179,9 +179,7 @@
         Polymer.AppLocalizeBehavior
       ],
 
-      ready: function() {
-
-      },
+      ready: function() {},
 
       _selectCsvSchema: function(e) {
         this.fire('select-schema', {

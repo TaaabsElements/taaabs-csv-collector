@@ -12,19 +12,14 @@
         display: block;
         padding: 0px;
       }
-
       :host .editIcons {
         float: right;
-      }
-
-      :host #submit {
-        opacity: 0.27;
       }
     </style>
 
     <iron-icon icon="icons:close" class="editIcons clickable hoverable fgError fgErrorH" id="cancel" on-click="_cancel">
     </iron-icon>
-    <iron-icon icon="icons:forward" class="editIcons clickable hoverable fgSuccess fgSuccessH" id="submit" on-click="_submit">
+    <iron-icon icon="icons:forward" class="editIcons clickable hoverable fgSuccess fgSuccessH fade" id="submit" on-click="_submit">
     </iron-icon>
     <h4> <span>[[localize('fSHeader')]]</span> </h4>
     <file-reader id="filereaderElem" files={{files}} language="[[language]]"></file-reader>
@@ -36,8 +31,8 @@
         </tr>
         <template is="dom-repeat" items="{{files}}">
           <tr>
-            <td> <span>{{item.name}}</span> </td>
-            <td> <span>{{item.size}}</span> </td>
+            <td> <span>[[item.name]]</span> </td>
+            <td> <span>[[item.size]]</span> </td>
           </tr>
         </template>
       </table>
@@ -126,24 +121,18 @@
       ready: function() {
         // Set the `_filereader`.
         this.set('fileReader', this.$.filereaderElem);
-        // Create a pointer to `this` for later.
-        var that = this;
         // Function triggered when the user has chosen some files with the
         //`_filereader`.
-        this.fileReader.returnFunction = function() {
-          // Changes css of the next step button
-          that.$.submit.style.cursor = "pointer";
-          that.$.submit.style.opacity = 1;
-        }
+        this.fileReader.addEventListener('files-selected', function(){
+          this.$.submit.classList.remove('fade');
+        }.bind(this));
       },
-
       _cancel: function() {
         this.set('files', []);
       },
-
       _submit: function() {
         if (this.files.length > 0)
-          this.fire('FILES_SELECTED');
+          this.fire('files-selected');
       }
     });
   </script>

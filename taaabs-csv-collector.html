@@ -13,6 +13,7 @@
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../iron-icon/iron-icon.html">
 <!---- DOM: misc imports ---->
+<link rel="import" href="../app-localize-behavior/app-localize-behavior.html">
 <link rel="import" href="../notify-toast-behavior/notify-toast-behavior.html">
 <link rel="import" href="../taaabs-themes/taaabs-theme.html">
 
@@ -34,7 +35,6 @@
         border-bottom: solid 1px grey;
       }
     </style>
-
     <iron-pages selected="{{_pageIndex}}">
       <div style="max-width: 1000px; margin: 0 auto;">
 
@@ -365,7 +365,7 @@
         }.bind(this));
         // Wait for the csv to ktbs model end event.
         //TODO : finish here
-        this.$['csv-ktbs-model'].addEventListener('SAVE_NEXT', function() {
+        this.$['csv-ktbs-model'].addEventListener('save-next', function() {
           // Set the global collector component
           this.set('_csvSchemas', this.$['csv-ktbs-model'].csvSchemas);
           // Set specifically the ktbs component

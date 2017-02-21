@@ -3,7 +3,6 @@
 <link rel="import" href="../app-localize-behavior/app-localize-behavior.html">
 <dom-module id="taaabs-csv-collector-steps">
   <template>
-
     <style include="taaabs-theme"></style>
     <style>
       :host {
@@ -11,38 +10,31 @@
         display: block;
         padding: 0px;
       }
-
       :host .cell {
         padding-left: 10px;
         width: 250px;
       }
-
       :host .cell:nth-child(1) {
         padding-left: 0px;
       }
-
       :host .cell > div {
         text-align: center;
         padding: 0.38em 1em 0.3em 1em;
       }
-
       :host .cellHeader {
         border: solid 1px grey;
         border-bottom: none;
       }
-
       :host .cellContent {
         text-transform: uppercase;
         border: solid 1px grey;
         border-top: none;
         font-size: 10px;
       }
-
       :host .undone {
         cursor: not-allowed;
       }
     </style>
-
     <div id="container" class="flex-horizontal flex-equal-justified fit-width">
       <template is="dom-repeat" items="{{steps}}">
         <div class="cell">
@@ -50,7 +42,7 @@
             [[localize('tccs_step')]] #[[_getRightIndex(index)]]
           </div>
           <div class="cellContent">
-            {{item.name}}
+            [[item.name]]
           </div>
         </div>
       </template>
