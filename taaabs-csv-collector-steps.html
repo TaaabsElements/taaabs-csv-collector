@@ -81,7 +81,7 @@
        *       "index": <INDEX_OF_THE_STEP_SELECTED>
        *     }
        *
-       * @event STEP_CLICKED
+       * @event step-clicked
        */
 
       properties: {
@@ -156,7 +156,7 @@
        */
       _cellClicked: function(e) {
         if (e.model.item.state === 'done')
-          this.fire('STEP_CLICKED', {
+          this.fire('step-clicked', {
             index: e.model.index
           });
       },

@@ -108,7 +108,7 @@
       /**
        * Fired when the chooses to create a new schema.
        *
-       * @event CREATE_SCHEMA
+       * @event create-schema
        */
 
       properties: {
@@ -184,13 +184,13 @@
       },
 
       _selectCsvSchema: function(e) {
-        this.fire('SELECT_SCHEMA', {
+        this.fire('select-schema', {
           index: this.$.selectcsvSchema.selected
         });
       },
 
       _createCsvSchema: function() {
-        this.fire('CREATE_SCHEMA');
+        this.fire('create-schema');
       },
 
       _openFiles: function() {

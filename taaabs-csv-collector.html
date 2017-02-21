@@ -129,7 +129,6 @@
       </taaabs-csv-schema>
     </div>
 
-
     <!---- DOM: csv-to-ktbs-model ---->
     <div class="flex-vertical">
       <div class="componentTitle">
@@ -170,7 +169,7 @@
           <span class="button" on-click="_backToHome">{{localize('tcc_back')}}</span>
         </div>
       </div>
-      <taaabs-csv-to-ktbs id="csvToKtbs" base="[[_base]]" csv-schemas="{{csvSchemas}}" files="{{files}}" csv-schema="{{csvSchema}}" language="[[language]]">
+      <taaabs-csv-to-ktbs id="csv-ktbs" language="[[language]]">
       </taaabs-csv-to-ktbs>
     </div>
   </iron-pages>
@@ -367,6 +366,12 @@
         // Wait for the csv to ktbs model end event.
         //TODO : finish here
         this.$['csv-ktbs-model'].addEventListener('SAVE_NEXT', function() {
+          // Set the global collector component
+          this.set('_csvSchemas', this.$['csv-ktbs-model'].csvSchemas);
+          // Set specifically the ktbs component
+          this.$['csv-ktbs'].set('csvSchema', this.$['csv-ktbs-model'].get('csvSchema'));
+          this.$['csv-ktbs'].set('files', this.$['csv-ktbs-model'].get('files'));
+          this.$['csv-ktbs'].set('fileReader', this.$['csv-ktbs-model'].get('fileReader'));
           this.$.csvToKtbs._goToPage(2);
           this._goToKtbs();
         }.bind(this));
@@ -472,6 +477,9 @@
        * @see _pageIndex
        */
       _goToKtbs: function() {
+        //TODO: Set base etc.
+        this.$['csv-ktbs'].set('base', this._base);
+        this.$['csv-ktbs'].set('csvSchemas', this._csvSchemas);
         this.set('_pageIndex', 3);
         window.scrollTo(0, 0);
       },
