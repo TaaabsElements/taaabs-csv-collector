@@ -149,15 +149,15 @@
       ready: function() {},
 
       _saveNext: function() {
-        this.fire('save-next');
+        this.fire('finalize-save-next');
       },
 
       _export: function() {
-        this.fire('export');
+        this.fire('finalize-export');
       },
 
       _saveExit: function() {
-        this.fire('save-exit');
+        this.fire('finalize-save-exit');
       },
 
       disableAll: function(){

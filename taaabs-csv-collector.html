@@ -352,7 +352,7 @@
       },
 
       attached: function() {
-        this.$['csv-schema'].addEventListener('save-next', function() {
+        this.$['csv-schema'].addEventListener('schema-save-next', function() {
           // Set the global collector component
           this.set('_csvSchemas', this.$['csv-schema'].csvSchemas);
           // Set specifically the ktbsmodel component
@@ -365,7 +365,7 @@
         }.bind(this));
         // Wait for the csv to ktbs model end event.
         //TODO : finish here
-        this.$['csv-ktbs-model'].addEventListener('save-next', function() {
+        this.$['csv-ktbs-model'].addEventListener('ktbs-model-save-next', function() {
           // Set the global collector component
           this.set('_csvSchemas', this.$['csv-ktbs-model'].csvSchemas);
           // Set specifically the ktbs component
