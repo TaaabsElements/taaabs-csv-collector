@@ -19,6 +19,7 @@
   "dependencies": {
     "polymer": "polymer/polymer",
     "taaabs-themes": "TaaabsElements/taaabs-themes",
+    "file-reader": "TaaabsElements/file-reader",
     "taaabs-csv-schema": "TaaabsElements/taaabs-csv-schema",
     "taaabs-csv-to-ktbs": "TaaabsElements/taaabs-csv-to-ktbs",
     "taaabs-csv-to-ktbsmodel": "TaaabsElements/taaabs-csv-to-ktbsmodel",
