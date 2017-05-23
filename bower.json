@@ -17,18 +17,18 @@
   "main": "taaabs-csv-collector.html",
   "license": "https://github.com/TaaabsElements/taaabs-csv-collector/LICENSE",
   "dependencies": {
-    "polymer": "polymer/polymer",
+    "polymer": "Polymer/polymer#<2.*",
     "taaabs-themes": "TaaabsElements/taaabs-themes",
     "file-reader": "TaaabsElements/file-reader",
     "taaabs-csv-schema": "TaaabsElements/taaabs-csv-schema",
     "taaabs-csv-to-ktbs": "TaaabsElements/taaabs-csv-to-ktbs",
     "taaabs-csv-to-ktbsmodel": "TaaabsElements/taaabs-csv-to-ktbsmodel",
-    "paper-dialog": "PolymerElements/paper-dialog",
-    "iron-icon": "PolymerElements/iron-icon",
-    "iron-icons": "PolymerElements/iron-icons",
-    "app-localize-behavior": "PolymerElements/app-localize-behavior",
+    "paper-dialog": "PolymerElements/paper-dialog#<2.*",
+    "iron-icon": "PolymerElements/iron-icon#<2.*",
+    "iron-icons": "PolymerElements/iron-icons#<2.*",
+    "app-localize-behavior": "PolymerElements/app-localize-behavior#<2.*",
     "notify-toast-behavior": "Yepikae/notify-toast-behavior",
-    "paper-button": "PolymerElements/paper-button"
+    "paper-button": "PolymerElements/paper-button#<2.*"
   },
   "devDependencies": {
     "iron-component-page": "polymerelements/iron-component-page#^1.0.0",
