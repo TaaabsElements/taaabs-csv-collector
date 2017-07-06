@@ -389,9 +389,11 @@
        * @method refresh
        */
       refresh: function() {
+        console.log(this.baseUrl);
         if (this.baseUrl !== "" && this.taaabsCentralLoading) {
           // Set the loading toast notification
-          var msg = this.localize('tcc-loading-base');
+          //var msg = this.localize('tcc-loading-base');
+          var msg = "Loading base";
           var id = this.notifyToast(msg, {
             type: "Loading",
             timeout: -1
